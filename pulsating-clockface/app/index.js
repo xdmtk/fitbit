@@ -1,7 +1,7 @@
 import document from "document"
 import clock from "clock"
 
-let bgImage = document.getElementById("background-frame");
+let bgImage = document.getElementById("background-frame1");
 let frameNumber = 0;
 let frameString = "";
 /*
@@ -19,3 +19,18 @@ setInterval(function() {
 }, 50);
 */
 
+setInterval(function() {
+    var front = document.getElementById("background-frame"+(frameNumber+1).toString());
+    if (frameNumber === 0) {
+        var back = document.getElementById("background-frame32");
+    }
+    else {
+        var back = document.getElementById("background-frame"+frameNumber.toString());
+    }
+    front.style.opacity = 1;
+    back.style.opacity = 0;
+    frameNumber += 1;
+    if (frameNumber === 32) {
+        frameNumber = 0;
+    }
+}, 50);
