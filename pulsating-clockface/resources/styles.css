@@ -5,6 +5,10 @@
   text-length: 32;
 }
 
+image {
+  opacity: 0;
+}
+
 #background {
   width: 100%;
   height: 100%;

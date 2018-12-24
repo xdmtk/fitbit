@@ -1,3 +1,34 @@
 <svg>
-  <rect id="background" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-0.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-1.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-2.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-3.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-4.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-5.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-6.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-7.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-8.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-9.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-10.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-11.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-12.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-13.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-14.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-15.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-16.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-17.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-18.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-19.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-20.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-21.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-22.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-23.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-24.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-25.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-26.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-27.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-28.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-29.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-30.jpg" />
+  <image id="background-frame" x="0" y="0" href="pulse/p-31.jpg" />
 </svg>
