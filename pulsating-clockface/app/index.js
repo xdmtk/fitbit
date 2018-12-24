@@ -5,6 +5,7 @@ let bgImage = document.getElementById("background-frame1");
 let frameNumber = 0;
 let frameString = "";
 /*
+bgImage.style.opacity = 1;
 setInterval(function() {
     if (frameNumber < 31) {
         frameString = "pulse/p-" + frameNumber + ".jpg";
@@ -18,7 +19,6 @@ setInterval(function() {
     }
 }, 50);
 */
-
 setInterval(function() {
     var front = document.getElementById("background-frame"+(frameNumber+1).toString());
     if (frameNumber === 0) {
@@ -33,4 +33,4 @@ setInterval(function() {
     if (frameNumber === 32) {
         frameNumber = 0;
     }
-}, 50);
+}, 70);
