@@ -1,12 +1,29 @@
 .defaultText {
-  font-size: 32;
-  font-family: System-Regular;
-  font-weight: regular;
-  text-length: 32;
+	font-size: 32;
+	font-family: System-Regular;
+	font-weight: regular;
+	text-length: 32;
 }
 
 #background {
-  width: 100%;
-  height: 100%;
-  fill: white;
+	width: 100%;
+	height: 100%;
+	fill: white;
 }
+
+#clock-text {
+	
+	font-weight: bold;
+	font-size: 36;
+	font-family: Fabrikat-Bold;
+}
+
+
+#date-text {
+	
+	font-weight: bold;
+	font-size: 36;
+	font-family: Fabrikat-Bold;
+}
+
+
