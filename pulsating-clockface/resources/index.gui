@@ -1,3 +1,4 @@
 <svg>
   <image id="background-frame" x="0" y="0" href="pulse/p-0.jpg" />
+  <rect x="30" y="30" width="287" height="187" id="timebox" fill="black" opacity=".4" />
 </svg>
