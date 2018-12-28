@@ -2,29 +2,33 @@ import document from "document";
 import { display } from "display";
 import clock from "clock";
 
-let bgImage = document.getElementById("background-frame");
-let frameNumber = 0;
-let frameString = "";
-let f = true;
-var expire = false;
+const bgImage = document.getElementById("background-frame");
+const l1 = document.getElementById("line1");
+const l2 = document.getElementById("line2");
+const l3 = document.getElementById("line3");
+const l4 = document.getElementById("line4");
+const l5 = document.getElementById("line5");
+
+
+var frameNumber = 0;
+var frameString = "";
+var f = true;
 var ticker = false;
 var pulser;
-clock.granularity = 'seconds';
 
 
-
-clock.ontick = function () {
-	if (!ticker) {
-		pulser = setInterval(function() {
-			pulsate();
-		}, 50);
+function main() {
+	clock.granularity = 'seconds';
+	clock.ontick = function () {
+		if (!ticker) {
+			pulser = setInterval(function() {
+				pulsate();
+			}, 50);
+		}
 	}
 }
 
-
-
-
-
+// TODO: Create functions to type text into window terminal style
 
 
 
@@ -54,3 +58,6 @@ function pulsate() {
 		ticker = false;
 	}
 }
+
+
+main();
