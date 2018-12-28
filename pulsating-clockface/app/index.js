@@ -1,6 +1,11 @@
 import document from "document";
 import { display } from "display";
 import clock from "clock";
+import { battery } from "power";
+
+
+
+
 
 const bgImage = document.getElementById("background-frame");
 const l1 = document.getElementById("line1");
@@ -15,19 +20,74 @@ var frameString = "";
 var f = true;
 var ticker = false;
 var pulser;
+var datevar;
+var date;
+var time;
+var batPercent;
 
 
 function main() {
-	write("Time -> 10:47:18 PM   Date -> wednesday    Battery -> 37%     ");
 	clock.granularity = 'seconds';
-	clock.ontick = function () {
+	clock.ontick = function (evt) {
+		datevar = evt.date;
 		if (!ticker) {
 			pulser = setInterval(function() {
 				pulsate();
 			}, 50);
 		}
 	};
+	stats = getStats();
 }
+
+function getStats() {
+	batPercent = battery.chargeLevel;
+	time = timeStr();
+	date = dateStr();
+	
+	
+
+}
+
+
+
+function dateStr() {
+	let month = date.getMonth();
+	let date - date.getDate();
+	
+	month = padDigit(month);
+	date = padDigit(date);
+	
+	return month + "/" + date;
+}
+
+
+
+function timeStr() {
+	let hours = datevar.getHours();
+	let mer = "AM";
+	if (hours > 12) {
+		hours -= 12;
+		mer = "PM";
+	}
+	else if (hours == 12) {
+		mer = "PM";
+	}
+	else if (hours < 10) {
+		hours = "0" + hours;
+	}
+	let minutes = date.getMinutes();
+	let seconds = date.getSeconds();
+
+	minutes = padDigit(minutes);
+	seconds = padDigit(seconds);
+
+	
+	return hours + ":" + minutes + ":" + seconds + " " + mer;
+}
+
+
+
+
 
 // TODO: Create functions to type text into window terminal style
 function write(text) {
@@ -62,7 +122,7 @@ function write(text) {
 		if (f == text.length) {
 			clearInterval(writer);
 		}
-	}, 100);
+	}, 60);
 }
 
 
@@ -74,6 +134,12 @@ function splitLines(text) {
         line += element;
 	});
 	return line;
+}
+
+
+function padDigit(digit) {
+	if (digit < 10) {
+		return "0" + digit;
 }
 
 
