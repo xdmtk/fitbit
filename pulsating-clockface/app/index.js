@@ -18,6 +18,7 @@ var pulser;
 
 
 function main() {
+	write("Time -> 10:47:18 PM   Date -> wednesday    Battery -> 37%     ");
 	clock.granularity = 'seconds';
 	clock.ontick = function () {
 		if (!ticker) {
@@ -25,11 +26,55 @@ function main() {
 				pulsate();
 			}, 50);
 		}
-	}
+	};
 }
 
 // TODO: Create functions to type text into window terminal style
+function write(text) {
+	console.log("in write");
+	let chars = splitLines(text);
+	let x = 1;
+	let f = 0;
+	let c = 0;
+	var outline = "";
+	console.log(chars);
+	let writer = setInterval(function () {
+		let id = document.getElementById("line" + x);
+		if (!c) {
+			id.text = "";
+		}
+		if (c < 19) {
+			if (!c && (chars[f] == " ")) {
+				f += 1;
+			}
+			else {
+				id.text += chars[f];
+				c += 1;
+				f += 1;
+			}
+		} else {
+			x += 1;
+			if (x == 6) {
+				clearInterval(writer);
+			}
+			c = 0;
+		}
+		if (f == text.length) {
+			clearInterval(writer);
+		}
+	}, 100);
+}
 
+
+function splitLines(text) {
+	console.log("in split lines");
+	let words = text.split("");
+	let line = "";
+	words.forEach(function (element){
+        line += element;
+	});
+	return line;
+}
 
 
 function pulsate() {
@@ -42,16 +87,10 @@ function pulsate() {
 			frameNumber -= 1;
 		}
 		else {
-			if (f) {
-				f = false;
-			} 
-			else {
-				f = true;
-			}
+			f = !f;
 		}
 		frameString = "pulse/p-" + frameNumber + ".png";
 		bgImage.image = frameString;
-		console.log(frameString);
 	}
 	else {
 		clearInterval(pulser);
