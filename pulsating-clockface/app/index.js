@@ -2,6 +2,7 @@ import document from "document";
 import { display } from "display";
 import clock from "clock";
 import { battery } from "power";
+import { goals } from "user-activity";
 
 
 
@@ -26,6 +27,11 @@ var time;
 var batPercent;
 
 
+/* 
+ *
+ * Main Function
+ *
+ */
 function main() {
 	clock.granularity = 'seconds';
 	clock.ontick = function (evt) {
@@ -36,20 +42,43 @@ function main() {
 			}, 50);
 		}
 	};
-	stats = getStats();
+	write(statsStr());	
 }
+
+
+
+
+/* 
+ *
+ * Stats Fetch
+ *
+ */
+function statsStr() {
+	getStats();
+	let t = padLine("$ time -> " + time);
+	let d = padLine("$ date -> " + date);
+	let b = padLine("$ bat -> " + batPercent + "%");
+	let c = padline("$ calories -> " + calories);
+	return t + d + b + c;
+}
+
 
 function getStats() {
 	batPercent = battery.chargeLevel;
 	time = timeStr();
 	date = dateStr();
-	
-	
+	calories = calorieStr();
 
 }
 
 
 
+
+/* 
+ *
+ * Auxillary Stats Functions
+ *
+ */
 function dateStr() {
 	let month = date.getMonth();
 	let date - date.getDate();
@@ -86,10 +115,20 @@ function timeStr() {
 }
 
 
+function calorieStr() {
+	return goals.calories;
+}
 
 
 
-// TODO: Create functions to type text into window terminal style
+
+
+
+/* 
+ *
+ * Writer Functions
+ *
+ */
 function write(text) {
 	console.log("in write");
 	let chars = splitLines(text);
@@ -125,7 +164,11 @@ function write(text) {
 	}, 60);
 }
 
-
+/* 
+ *
+ * Misc
+ *
+ */
 function splitLines(text) {
 	console.log("in split lines");
 	let words = text.split("");
@@ -143,6 +186,22 @@ function padDigit(digit) {
 }
 
 
+function padLine(text) {
+	while (text.length < 19) {
+		text += " ";
+	}
+	return text;
+}
+
+
+
+
+
+/* 
+ *
+ * Main BG Animation Function
+ *
+ */
 function pulsate() {
 	if (display.on) {
 		ticker = true;
