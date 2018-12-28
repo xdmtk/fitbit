@@ -20,7 +20,8 @@
 
 
 #date-text {
-	
+	stroke: white;
+	stroke-width: 1;
 	font-weight: bold;
 	font-size: 36;
 	font-family: Fabrikat-Bold;

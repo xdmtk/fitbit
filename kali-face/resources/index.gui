@@ -1,7 +1,7 @@
 <svg>
 	<image href="kali.jpg" />
 	<text x="5" y="30" id="clock-text">00.00.00</text>
-	<text x="245" y="30" id="date-text">00/00</text>
+	<text x="250" y="30" id="date-text">00/00</text>
 	
 
 
