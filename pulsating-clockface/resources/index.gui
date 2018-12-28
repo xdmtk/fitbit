@@ -1,11 +1,11 @@
 <svg>
 	<image id="background-frame" x="0" y="0" href="pulse/p-0.jpg" />
-	<rect x="30" y="30" width="287" height="187" id="timebox" fill="black" opacity=".4" />
+	<rect x="30" y="30" width="287" height="187" id="timebox" fill="black" opacity=".6" />
 	<rect x="30" y="30" width="287" height="2" fill="#9bff70"  />
 	<rect x="317" y="30" width="2" height="187" fill="#9bff70"  />
 	<rect x="30" y="30" width="2" height="187" fill="#9bff70"  />
 	<rect x="30" y="217" width="287" height="2" fill="#9bff70"  />
 
-	<text id="line1" x="35" y="55" fill="#7abc5e" >Test</text>
+	<text id="line1" x="42" y="65" fill="#7abc5e" font-family="Colfax" font-size="24" >1234567890123456789</text>
 
 </svg>
