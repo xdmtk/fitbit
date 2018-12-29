@@ -72,14 +72,7 @@ function main() {
 		if (!writing) {
 			writing = true;
 			write(msgList[msgenum]());
-
-			// Temporary alternation, when more msg panels, better enumaration
-			if (!msgenum) {
-				msgenum = 1;
-			} else {
-				msgenum = 0;
-			}
-
+			msgCycler();
 		}
 	};
 }
@@ -333,6 +326,15 @@ function padLine(text) {
 		text += " ";
 	}
 	return text;
+}
+
+
+function msgCycler() {
+	let l = msgList.length;
+	msgenum += 1;
+	if (msgenum === l) {
+		msgenum = 0;
+	}
 }
 
 
