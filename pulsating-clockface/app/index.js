@@ -19,7 +19,7 @@ const l4 = document.getElementById("line4");
 const l5 = document.getElementById("line5");
 const lineLimit = 21;
 const bashStr = "#!/bin/bash";
-const msgList = [ healthStatsStr ];
+const msgList = [ devStatsStr, healthStatsStr ];
 
 
 
@@ -38,8 +38,9 @@ var dist;
 var steps
 var hbpm;
 var elev;
-var writing = false;
 
+var writing = false;
+var msgenum = 0;
 
 
 
@@ -70,7 +71,15 @@ function main() {
 		}
 		if (!writing) {
 			writing = true;
-			write(msgList[0]());	
+			write(msgList[msgenum]());
+
+			// Temporary alternation, when more msg panels, better enumaration
+			if (!msgenum) {
+				msgenum = 1;
+			} else {
+				msgenum = 0;
+			}
+
 		}
 	};
 }
@@ -250,7 +259,7 @@ function write(text) {
 		// Reaches line limit
 		} else {
 			
-			console.log("going to next line on char" + char[f]);
+//			console.log("going to next line on char" + char[f]);
 			// Go to next line
 			x += 1;
 
