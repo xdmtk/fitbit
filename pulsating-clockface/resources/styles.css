@@ -30,3 +30,8 @@
   height: 100%;
   fill: white;
 }
+
+#bord {
+	opacity: .4;
+	fill: #9bff70;
+}
