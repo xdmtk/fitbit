@@ -10,7 +10,7 @@ import { memory } from "system";
 
 
 
-
+const doc = document.getElementById("foo");
 const bgImage = document.getElementById("background-frame");
 const l1 = document.getElementById("line1");
 const l2 = document.getElementById("line2");
@@ -55,6 +55,7 @@ var tb = true;
 function main() {
 
 	startHrm();
+	setupEventHandlers();
 	
 	clock.granularity = 'seconds';
 	clock.ontick = function (evt) {
@@ -65,12 +66,26 @@ function main() {
 			}, 60);
 		}
 		if (!writing) {
-			writing = true;
 			write(msgList[msgenum]());
 			msgCycler();
 		}
 	};
 }
+
+
+
+/* 
+ *
+ * Stats Fetch
+ *
+ */
+function setupEventHandlers() {
+	doc.onmousedown = function () {
+		abortWrite = true;
+		console.log("mouse press");
+	}
+}
+
 
 
 
@@ -214,6 +229,7 @@ function memoryStr() {
  *
  */
 function write(text) {
+	writing = true;
 	console.log("in write");
 	let chars = splitLines(text);
 	let x = 1;
