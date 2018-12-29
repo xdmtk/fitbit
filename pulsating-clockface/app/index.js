@@ -14,7 +14,7 @@ const l2 = document.getElementById("line2");
 const l3 = document.getElementById("line3");
 const l4 = document.getElementById("line4");
 const l5 = document.getElementById("line5");
-
+const lineLimit = 21;
 
 var frameNumber = 0;
 var frameString = "";
@@ -25,7 +25,10 @@ var datevar;
 var date;
 var time;
 var batPercent;
+var calories;
 
+
+var tb = true;
 
 /* 
  *
@@ -41,8 +44,11 @@ function main() {
 				pulsate();
 			}, 50);
 		}
+		if (tb) {
+			write(statsStr());	
+			tb = !tb;
+		}
 	};
-	write(statsStr());	
 }
 
 
@@ -55,10 +61,10 @@ function main() {
  */
 function statsStr() {
 	getStats();
-	let t = padLine("$ time -> " + time);
-	let d = padLine("$ date -> " + date);
-	let b = padLine("$ bat -> " + batPercent + "%");
-	let c = padline("$ calories -> " + calories);
+	let t = "$ time -> " + time;
+	let d = "$ date -> " + date;
+	let b = "$ bat -> " + batPercent + "%";
+	let c = "$ calories -> " + calories;
 	return t + d + b + c;
 }
 
@@ -80,8 +86,8 @@ function getStats() {
  *
  */
 function dateStr() {
-	let month = date.getMonth();
-	let date - date.getDate();
+	let month = datevar.getMonth();
+	let date = datevar.getDate();
 	
 	month = padDigit(month);
 	date = padDigit(date);
@@ -98,14 +104,14 @@ function timeStr() {
 		hours -= 12;
 		mer = "PM";
 	}
-	else if (hours == 12) {
+	else if (hours === 12) {
 		mer = "PM";
 	}
 	else if (hours < 10) {
 		hours = "0" + hours;
 	}
-	let minutes = date.getMinutes();
-	let seconds = date.getSeconds();
+	let minutes = datevar.getMinutes();
+	let seconds = datevar.getSeconds();
 
 	minutes = padDigit(minutes);
 	seconds = padDigit(seconds);
@@ -138,27 +144,46 @@ function write(text) {
 	var outline = "";
 	console.log(chars);
 	let writer = setInterval(function () {
+
+		// Set line id
 		let id = document.getElementById("line" + x);
+
+		// Clear the line from existing text when c is 0
 		if (!c) {
 			id.text = "";
 		}
-		if (c < 19) {
-			if (!c && (chars[f] == " ")) {
+		if (c < lineLimit) {
+			if (!c && (chars[f] === " ")) {
 				f += 1;
+			}
+			else if (chars[f] === "$") {
+				c = 0;
+				x += 1;
 			}
 			else {
 				id.text += chars[f];
 				c += 1;
 				f += 1;
 			}
+
+		// Reaches line limit
 		} else {
+			
+			console.log("going to next line on char" + char[f]);
+			// Go to next line
 			x += 1;
-			if (x == 6) {
+
+			// Clear if all lines filled
+			if (x === 6) {
 				clearInterval(writer);
 			}
+
+			// Reset char count
 			c = 0;
 		}
-		if (f == text.length) {
+
+		// Clear interval when all chars printed
+		if (f === text.length) {
 			clearInterval(writer);
 		}
 	}, 60);
@@ -183,11 +208,15 @@ function splitLines(text) {
 function padDigit(digit) {
 	if (digit < 10) {
 		return "0" + digit;
+	}
+	else {
+		return digit;
+	}
 }
 
 
 function padLine(text) {
-	while (text.length < 19) {
+	while (text.length < lineLimit) {
 		text += " ";
 	}
 	return text;
@@ -222,6 +251,5 @@ function pulsate() {
 		ticker = false;
 	}
 }
-
 
 main();
