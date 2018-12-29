@@ -2,7 +2,9 @@ import document from "document";
 import { display } from "display";
 import clock from "clock";
 import { battery } from "power";
-import { today } from "user-activity";
+import { activity } from "user-activity";
+import { memory } from "system";
+
 
 
 
@@ -15,6 +17,10 @@ const l3 = document.getElementById("line3");
 const l4 = document.getElementById("line4");
 const l5 = document.getElementById("line5");
 const lineLimit = 21;
+const bashStr = "#!/bin/bash";
+const msgList = [ devStatsStr ];
+
+
 
 var frameNumber = 0;
 var frameString = "";
@@ -26,7 +32,10 @@ var date;
 var time;
 var batPercent;
 var calories;
+var mem;
 var writing = false;
+
+
 
 
 var tb = true;
@@ -43,11 +52,11 @@ function main() {
 		if (!ticker) {
 			pulser = setInterval(function() {
 				pulsate();
-			}, 50);
+			}, 30);
 		}
 		if (!writing) {
 			writing = true;
-			write(statsStr());	
+			write(msgList[0]());	
 		}
 	};
 }
@@ -60,22 +69,30 @@ function main() {
  * Stats Fetch
  *
  */
-function statsStr() {
-	getStats();
+function devStatsStr() {
+	setDevStats();
 	let t = "$ time -> " + time;
 	let d = "$ date -> " + date;
-	let b = "$ bat -> " + batPercent + "%";
-	let c = "$ calories -> " + calories;
-	return t + d + b + c;
+	let b = "$ battery -> " + batPercent + "%";
+	let m = "$ memory -> " + mem + "%";
+	return bashStr + t + d + b + m;
 }
 
 
-function getStats() {
+function healthStatsStr() {
+	let 
+
+
+
+
+
+
+
+function setDevStats() {
 	batPercent = battery.chargeLevel;
 	time = timeStr();
 	date = dateStr();
-	calories = calorieStr();
-
+	mem = memoryStr();
 }
 
 
@@ -87,13 +104,14 @@ function getStats() {
  *
  */
 function dateStr() {
-	let month = datevar.getMonth();
+	let month = datevar.getMonth()+1;
 	let date = datevar.getDate();
+	let year = datevar.getYear()-100;
 	
 	month = padDigit(month);
 	date = padDigit(date);
 	
-	return month + "/" + date;
+	return month + "/" + date + "/" + year;
 }
 
 
@@ -124,6 +142,12 @@ function timeStr() {
 
 function calorieStr() {
 	return today.local.calories;
+}
+
+
+
+function memoryStr() {
+	return Math.floor(((memory.native.used / memory.native.total)*100));
 }
 
 
@@ -195,7 +219,7 @@ function write(text) {
 
 function clearTerminal() {
 	setTimeout(function () {
-		for (let x = 1; x < 6; ++x) {
+		for (let x = 2; x < 6; ++x) {
 			let id = document.getElementById("line" + x);
 			id.text = "";
 		}
