@@ -2,7 +2,7 @@ import document from "document";
 import { display } from "display";
 import clock from "clock";
 import { battery } from "power";
-import { goals } from "user-activity";
+import { today } from "user-activity";
 
 
 
@@ -26,6 +26,7 @@ var date;
 var time;
 var batPercent;
 var calories;
+var writing = false;
 
 
 var tb = true;
@@ -44,9 +45,9 @@ function main() {
 				pulsate();
 			}, 50);
 		}
-		if (tb) {
+		if (!writing) {
+			writing = true;
 			write(statsStr());	
-			tb = !tb;
 		}
 	};
 }
@@ -122,7 +123,7 @@ function timeStr() {
 
 
 function calorieStr() {
-	return goals.calories;
+	return today.local.calories;
 }
 
 
@@ -156,7 +157,7 @@ function write(text) {
 			if (!c && (chars[f] === " ")) {
 				f += 1;
 			}
-			else if (chars[f] === "$") {
+			else if (chars[f] === "$" && c) {
 				c = 0;
 				x += 1;
 			}
@@ -176,6 +177,7 @@ function write(text) {
 			// Clear if all lines filled
 			if (x === 6) {
 				clearInterval(writer);
+				writing = false;
 			}
 
 			// Reset char count
@@ -185,8 +187,9 @@ function write(text) {
 		// Clear interval when all chars printed
 		if (f === text.length) {
 			clearInterval(writer);
+			writing = false;
 		}
-	}, 60);
+	}, 30);
 }
 
 /* 
