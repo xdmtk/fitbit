@@ -67,7 +67,7 @@ function main() {
 		if (!ticker) {
 			pulser = setInterval(function() {
 				pulsate();
-			}, 30);
+			}, 60);
 		}
 		if (!writing) {
 			writing = true;
@@ -271,20 +271,18 @@ function write(text) {
 			clearInterval(writer);
 			clearTerminal();
 		}
-	}, 30);
+	}, 5);
 }
 
 
 function clearTerminal() {
 	setTimeout(function () {
-		for (let x = 2; x < 6; ++x) {
+		for (let x = 1; x < 6; ++x) {
 			let id = document.getElementById("line" + x);
 			id.text = "";
 		}
-		setTimeout(function (){
-			writing = false;
-		}, 500);
-	}, 2500);
+		writing = false;
+	}, 1500);
 
 
 }
