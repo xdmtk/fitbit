@@ -1,8 +1,9 @@
+import { HeartRateSensor } from "heart-rate";
 import document from "document";
 import { display } from "display";
 import clock from "clock";
 import { battery } from "power";
-import { activity } from "user-activity";
+import { today } from "user-activity";
 import { memory } from "system";
 
 
@@ -18,7 +19,7 @@ const l4 = document.getElementById("line4");
 const l5 = document.getElementById("line5");
 const lineLimit = 21;
 const bashStr = "#!/bin/bash";
-const msgList = [ devStatsStr ];
+const msgList = [ healthStatsStr ];
 
 
 
@@ -33,6 +34,10 @@ var time;
 var batPercent;
 var calories;
 var mem;
+var dist;
+var steps
+var hbpm;
+var elev;
 var writing = false;
 
 
@@ -80,19 +85,12 @@ function devStatsStr() {
 
 
 function healthStatsStr() {
-	let 
-
-
-
-
-
-
-
-function setDevStats() {
-	batPercent = battery.chargeLevel;
-	time = timeStr();
-	date = dateStr();
-	mem = memoryStr();
+	setHealthStats();
+	let c = "$ calories -> " + calories;
+	let s = "$ steps ->  " + steps;
+	let h = "$ heart bpm ->  " + hbpm;
+	let e = "$ distance ->  " + dist + " mi";
+	return bashStr + c + s + h + e;
 }
 
 
@@ -100,9 +98,64 @@ function setDevStats() {
 
 /* 
  *
- * Auxillary Stats Functions
+ * Stats Set 
  *
  */
+
+function setDevStats() {
+	batPercent = batteryStr();
+	time = timeStr();
+	date = dateStr();
+	mem = memoryStr();
+}
+
+function setHealthStats() {
+	calories = calorieStr();
+	steps = stepsStr();
+	hbpm = bpmStr();
+	dist = distanceStr();
+}
+
+
+/* 
+ *
+ * Health Stats Functions
+ *
+ */
+function stepsStr() {
+	return today.local.steps;
+}
+
+
+function calorieStr() {
+	return today.local.calories;
+}
+
+function distanceStr() {
+	return (today.local.distance * .00062137).toFixed(1);
+}
+
+function bpmStr() {
+	let sensor = new HeartRateSensor();
+	sensor.start();
+	let r = sensor.heartRate
+	sensor.stop();
+	return r;
+}
+
+
+
+/* 
+ *
+ * Device Stats Functions
+ *
+ */
+
+function batteryStr() {
+	return battery.chargeLevel;
+}
+
+
 function dateStr() {
 	let month = datevar.getMonth()+1;
 	let date = datevar.getDate();
@@ -139,16 +192,15 @@ function timeStr() {
 	return hours + ":" + minutes + ":" + seconds + " " + mer;
 }
 
-
-function calorieStr() {
-	return today.local.calories;
-}
-
-
-
 function memoryStr() {
 	return Math.floor(((memory.native.used / memory.native.total)*100));
 }
+
+
+
+
+
+
 
 
 
