@@ -40,6 +40,7 @@ var hbpm;
 var elev;
 
 var writing = false;
+var abortWrite = false;
 var msgenum = 0;
 
 
@@ -52,15 +53,9 @@ var tb = true;
  *
  */
 function main() {
-	// Start Heart monitor
-	let hrm = new HeartRateSensor();
-	hrm.onreading = function() {
-		hbpm = hrm.heartRate;
-	}
-	hrm.start();
 
-
-
+	startHrm();
+	
 	clock.granularity = 'seconds';
 	clock.ontick = function (evt) {
 		datevar = evt.date;
@@ -235,7 +230,7 @@ function write(text) {
 		if (!c) {
 			id.text = "";
 		}
-		if (c < lineLimit) {
+		if (c < lineLimit && !abortWrite) {
 			if (!c && (chars[f] === " ")) {
 				f += 1;
 			}
@@ -257,9 +252,12 @@ function write(text) {
 			x += 1;
 
 			// Clear if all lines filled
-			if (x === 6) {
+			if ((x === 6) || (abortWrite)) {
 				clearInterval(writer);
 				clearTerminal();
+				if (abortWrite) {
+					abortWrite = !abortWrite;
+				}
 			}
 
 			// Reset char count
@@ -282,7 +280,7 @@ function clearTerminal() {
 			id.text = "";
 		}
 		writing = false;
-	}, 1500);
+	}, 500);
 
 
 }
@@ -364,5 +362,23 @@ function pulsate() {
 		ticker = false;
 	}
 }
+
+
+/* 
+ *
+ * Heart Rate Monitor Functiion
+ *
+ */
+function startHrm(){
+	// Start Heart monitor
+	let hrm = new HeartRateSensor();
+	hrm.onreading = function() {
+		hbpm = hrm.heartRate;
+	}
+	hrm.start();
+}
+
+
+
 
 main();
