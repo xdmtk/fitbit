@@ -177,7 +177,7 @@ function write(text) {
 			// Clear if all lines filled
 			if (x === 6) {
 				clearInterval(writer);
-				writing = false;
+				clearTerminal();
 			}
 
 			// Reset char count
@@ -187,10 +187,31 @@ function write(text) {
 		// Clear interval when all chars printed
 		if (f === text.length) {
 			clearInterval(writer);
-			writing = false;
+			clearTerminal();
 		}
 	}, 30);
 }
+
+
+function clearTerminal() {
+	setTimeout(function () {
+		for (let x = 1; x < 6; ++x) {
+			let id = document.getElementById("line" + x);
+			id.text = "";
+		}
+		setTimeout(function (){
+			writing = false;
+		}, 500);
+	}, 2500);
+
+
+}
+
+
+
+
+
+
 
 /* 
  *
