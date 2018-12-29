@@ -13,7 +13,7 @@
 	<rect  id="bord" x="30" y="30" width="2" height="187" />
 	<rect id="bord" x="30" y="217" width="287" height="2" />
 
-	<text id="line1" x="103" y="55" fill="#7abc5e" font-family="Colfax" font-size="24" > </text>
+	<text id="line1" x="78" y="55" fill="#7abc5e" font-family="Colfax" font-size="24" > </text>
 	<text id="line2" x="44" y="100" fill="#7abc5e" font-family="Colfax" font-size="24" > </text>
 	<text id="line3" x="44" y="130" fill="#7abc5e" font-family="Colfax" font-size="24" > </text>
 	<text id="line4" x="44" y="160" fill="#7abc5e" font-family="Colfax" font-size="24" > </text>

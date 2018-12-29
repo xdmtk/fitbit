@@ -18,11 +18,11 @@ const l3 = document.getElementById("line3");
 const l4 = document.getElementById("line4");
 const l5 = document.getElementById("line5");
 const lineLimit = 21;
-const bashStr = "#!/bin/bash";
 const msgList = [ devStatsStr, healthStatsStr ];
 
 
 
+var bashStr = "#!/bin/bash";
 var frameNumber = 0;
 var frameString = "";
 var f = true;
@@ -91,7 +91,7 @@ function devStatsStr() {
 	let d = "$ date -> " + date;
 	let b = "$ battery -> " + batPercent + "%";
 	let m = "$ memory -> " + mem + "%";
-	return bashStr + t + d + b + m;
+	return bashStr + " -dev" + t + d + b + m;
 }
 
 
@@ -101,7 +101,7 @@ function healthStatsStr() {
 	let s = "$ steps ->  " + steps;
 	let h = "$ h. bpm ->  " + hbpm;
 	let e = "$ distance ->  " + dist + " mi";
-	return bashStr + c + s + h + e;
+	return bashStr + " -self" + c + s + h + e;
 }
 
 
