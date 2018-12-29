@@ -5,6 +5,7 @@ import clock from "clock";
 import { battery } from "power";
 import { today } from "user-activity";
 import { memory } from "system";
+import { display } from "display";
 
 
 
@@ -38,6 +39,7 @@ var dist;
 var steps
 var hbpm;
 var elev;
+var hrm;
 
 var writing = false;
 var abortWrite = false;
@@ -84,6 +86,23 @@ function setupEventHandlers() {
 		abortWrite = true;
 		console.log("mouse press");
 	}
+	setTimeout(function() {
+		display.poke();
+	}, 15000);
+	console.log("disabling autoff");
+	display.addEventListener("change", function(event) {
+		if (!display.on) {
+			hrm.stop();
+			console.log("stopping sensors");
+		}
+		else {
+			hrm.start();
+			console.log("starting sensors");
+		}
+	});
+			
+
+	
 }
 
 
@@ -115,6 +134,9 @@ function healthStatsStr() {
 }
 
 
+function envStatsStr() {
+	console.log("foo");
+}
 
 
 /* 
@@ -387,7 +409,7 @@ function pulsate() {
  */
 function startHrm(){
 	// Start Heart monitor
-	let hrm = new HeartRateSensor();
+	hrm = new HeartRateSensor();
 	hrm.onreading = function() {
 		hbpm = hrm.heartRate;
 	}
