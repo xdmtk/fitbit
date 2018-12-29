@@ -51,6 +51,15 @@ var tb = true;
  *
  */
 function main() {
+	// Start Heart monitor
+	let hrm = new HeartRateSensor();
+	hrm.onreading = function() {
+		hbpm = hrm.heartRate;
+	}
+	hrm.start();
+
+
+
 	clock.granularity = 'seconds';
 	clock.ontick = function (evt) {
 		datevar = evt.date;
@@ -88,7 +97,7 @@ function healthStatsStr() {
 	setHealthStats();
 	let c = "$ calories -> " + calories;
 	let s = "$ steps ->  " + steps;
-	let h = "$ heart bpm ->  " + hbpm;
+	let h = "$ h. bpm ->  " + hbpm;
 	let e = "$ distance ->  " + dist + " mi";
 	return bashStr + c + s + h + e;
 }
@@ -112,8 +121,10 @@ function setDevStats() {
 function setHealthStats() {
 	calories = calorieStr();
 	steps = stepsStr();
-	hbpm = bpmStr();
 	dist = distanceStr();
+	if (hbpm === undefined) {
+		hbpm = "wait";
+	}
 }
 
 
@@ -135,13 +146,6 @@ function distanceStr() {
 	return (today.local.distance * .00062137).toFixed(1);
 }
 
-function bpmStr() {
-	let sensor = new HeartRateSensor();
-	sensor.start();
-	let r = sensor.heartRate
-	sensor.stop();
-	return r;
-}
 
 
 
