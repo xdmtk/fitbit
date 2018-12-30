@@ -8,6 +8,7 @@ import { memory } from "system";
 import { display } from "display";
 import { me } from "companion";
 import { Barometer } from "barometer";
+import * as messaging from "messaging";
 
 
 
@@ -79,6 +80,7 @@ function main() {
 	startHrm();
 	startBrm();
 	setupEventHandlers();
+	setupWeatherModule();
 	
 	clock.granularity = 'seconds';
 	clock.ontick = function (evt) {
