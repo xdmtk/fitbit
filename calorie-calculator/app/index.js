@@ -15,6 +15,8 @@ const bord50 = document.getElementById("fiftyb");
 const bord10 = document.getElementById("tenb");
 
 const buttonPm = document.getElementById("plus-button");
+const bordbuttonPm = document.getElementById("plus-button");
+const fillbuttonPm = document.getElementById("plus-buttonf");
 
 var plusMin;
 var totalCals;
@@ -40,6 +42,7 @@ function main() {
 
 
 function addSubtractMod(action) {
+	console.log("in addsubtract mod with action: " + action);
 	if (action === "read") {
 		if (buttonPm.text === "+") {
 			plusMin = "add";
@@ -50,10 +53,12 @@ function addSubtractMod(action) {
 	}
 	else if (action === "flip") {
 		if (buttonPm.text === "+") {
+			console.log("flipping to subtract";
 			plusMin = "subtract";
 			buttonPm.text = "-";
 		}
 		else {
+			console.log("flipping to add";
 			plusMin = "add";
 			buttonPm.text = "+";
 		}
@@ -97,13 +102,22 @@ function setupButtonHandlers() {
 	bord50.onclick =  function() { addSubtractCals(50); }
 	bord10.onclick = function() { addSubtractCals(10); }
 
-	buttomPm.onclick = function() { addSubtractMod("flip"); }
+	buttonPm.onclick = function() { addSubtractMod("flip"); }
+	bordbuttonPm.onclick = function() { addSubtractMod("flip"); }
+	fillbuttonPm.onclick = function() { addSubtractMod("flip"); }
+
 }
 
 
 function addSubtractCals(amount) {
 	if (plusMin === "add") {
-		totalCals += amount;
+		if (totalCals + amount < 10000) {
+			totalCals += amount;
+		}
+		else {
+			totalCals = 9999;
+		}
+
 	}
 	else {
 		if (totalCals - amount >= 0) {

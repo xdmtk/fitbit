@@ -8,9 +8,9 @@
 
 
 	<!-- Plus / Minus button -->
-	<rect class="recbord" width="80" height="70" x="240" y="41" fill="#9f37c8" />
-	<rect class="recfill" width="76" height="66" x="242" y="44" />
-	<text id="plus-button" x="261" y="94">+</text>
+	<rect id="plus-buttonb" pointer-events="visible"  class="recbord" width="80" height="70" x="240" y="41" fill="#9f37c8" />
+	<rect id="plus-buttonf" pointer-events="visible" class="recfill" width="76" height="66" x="242" y="44" />
+	<text id="plus-button" pointer-events="visible" x="261" y="94">+</text>
 
 
 	<!-- Three calorie value buttons -->
