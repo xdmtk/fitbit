@@ -28,7 +28,7 @@ const l5 = document.getElementById("line5");
 
 // Message Vars
 const lineLimit = 21;
-const msgList = [ devStatsStr, healthStatsStr ];
+const msgList = [ devStatsStr, healthStatsStr, envStatsStr ];
 
 
 // Misc
@@ -157,9 +157,12 @@ function healthStatsStr() {
 
 
 function envStatsStr() {
-	let e = "$ altitude -> " + elev;
-
-	console.log("foo");
+	setEnvStats();	
+	let e = "$ altitude -> " + elev + "ft";
+	let f = "$ floors -> 777";
+	let c = "$ city -> g. hills";
+	let w = "$ weather -> --F";
+	return bashStr + " -env" + e + f + c + w;
 }
 
 
@@ -189,6 +192,9 @@ function setHealthStats() {
 function setEnvStats() {
 	if (elev === undefined) {
 		elev = "--";
+	}
+	else {
+		elev = elev.toFixed(0);
 	}
 }
 
@@ -346,7 +352,7 @@ function clearTerminal() {
 			id.text = "";
 		}
 		writing = false;
-	}, 500);
+	}, 750);
 
 
 }
