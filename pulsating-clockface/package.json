@@ -29,6 +29,7 @@
     "debug": "fitbit"
   },
   "dependencies": {
+    "fitbit-sdk": "0.0.1",
     "fitbit-weather": "^0.2.0"
   }
 }
