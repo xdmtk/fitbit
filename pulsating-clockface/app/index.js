@@ -1,4 +1,4 @@
-import `{ HeartRateSensor } from "heart-rate";
+import { HeartRateSensor } from "heart-rate";
 import document from "document";
 import { display } from "display";
 import clock from "clock";
@@ -6,6 +6,11 @@ import { battery } from "power";
 import { today } from "user-activity";
 import { memory } from "system";
 import { display } from "display";
+import { me } from "companion";
+import { Barometer } from "barometer";
+
+
+
 
 
 
@@ -68,7 +73,11 @@ var msgenum = 0;
  */
 function main() {
 
+
+
+
 	startHrm();
+	startBrm();
 	setupEventHandlers();
 	
 	clock.granularity = 'seconds';
@@ -170,10 +179,16 @@ function setHealthStats() {
 	steps = stepsStr();
 	dist = distanceStr();
 	if (hbpm === undefined) {
-		hbpm = "wait";
+		hbpm = "--";
 	}
 }
 
+
+function setEnvStats() {
+	if (elev === undefined) {
+		elev = "--";
+	}
+}
 
 /* 
  *
@@ -265,13 +280,11 @@ function memoryStr() {
  */
 function write(text) {
 	writing = true;
-	console.log("in write");
 	let chars = splitLines(text);
 	let x = 1;
 	let f = 0;
 	let c = 0;
 	var outline = "";
-	console.log(chars);
 	let writer = setInterval(function () {
 
 		// Set line id
@@ -348,7 +361,6 @@ function clearTerminal() {
  *
  */
 function splitLines(text) {
-	console.log("in split lines");
 	let words = text.split("");
 	let line = "";
 	words.forEach(function (element){
@@ -454,13 +466,59 @@ function startBrm() {
 function sensorControl(control) {
 	if (control === "start") {
 		hrm.start();
-		bar.star();
+		bar.start();
 	}
 	else if (control === "stop") {
 		hrm.stop();
 		bar.stop();
 	}
 }
+
+
+// Request weather data from the companion
+function fetchWeather() {
+	if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
+		// Send a command to the companion
+		messaging.peerSocket.send({
+		command: 'weather'
+		});
+	}
+}
+
+// Display the weather data received from the companion
+function processWeatherData(data) {
+	console.log("The temperature is: " + data.temperature);
+}
+
+
+function setupWeatherModule() {
+	// Listen for the onopen event
+	messaging.peerSocket.onopen = function() {
+		// Fetch weather when the connection opens
+		fetchWeather();
+	}
+
+	// Listen for messages from the companion
+	messaging.peerSocket.onmessage = function(evt) {
+		if (evt.data) {
+			processWeatherData(evt.data);
+		}
+	}
+
+	// Listen for the onerror event
+	messaging.peerSocket.onerror = function(err) {
+	// Handle any errors
+	console.log("Connection error: " + err.code + " - " + err.message);
+	}
+
+	// Fetch the weather every 30 minutes
+	setInterval(fetchWeather, 30 * 1000 * 60);
+}
+
+
+
+
+
 
 
 
