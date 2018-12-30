@@ -1,30 +1,33 @@
 <svg>
 	<rect id="background" />
 
+	<text id="date-title" x="65" y="20" font-size="18" fill="white">Caloric Data for - 12/12/18</text>
+	<line x1="0" x2="348" y1="28" y2="28" fill="#37c857" />
+
 	<!-- Main calorie display -->
-	<rect class="recbord" width="57%" height="38%" x="29" y="27" />
-	<rect class="recfill" width="55%" height="36%" x="33" y="30" />
-	<text id="total-cals" x="59" y="95" >2777</text>
+	<rect class="recbord" width="57%" height="38%" x="29" y="47" />
+	<rect class="recfill" width="55%" height="36%" x="33" y="50" />
+	<text id="total-cals" x="59" y="115" >2777</text>
 
 
 	<!-- Plus / Minus button -->
-	<rect id="plus-buttonb" pointer-events="visible"  class="recbord" width="80" height="70" x="240" y="41" fill="#9f37c8" />
-	<rect id="plus-buttonf" pointer-events="visible" class="recfill" width="76" height="66" x="242" y="44" />
-	<text id="plus-button" pointer-events="visible" x="261" y="94">+</text>
+	<rect id="plus-buttonb" pointer-events="visible"  class="recbord" width="80" height="70" x="240" y="61" fill="#9f37c8" />
+	<rect id="plus-buttonf" pointer-events="visible" class="recfill" width="76" height="66" x="242" y="64" />
+	<text id="plus-button" pointer-events="visible" x="261" y="114">+</text>
 
 
 	<!-- Three calorie value buttons -->
-	<rect id="hundredb" class="recbord" width="90" height="70" x="29" y="152" fill="#37a9c8" />
-	<rect id="hundredf" class="recfill" width="86" height="66" x="31" y="154" />
-	<text id="hundred" class="buttons" x="41" y="200">100</text>
+	<rect id="hundredb" class="recbord" width="90" height="70" x="29" y="162" fill="#37a9c8" />
+	<rect id="hundredf" class="recfill" width="86" height="66" x="31" y="164" />
+	<text id="hundred" class="buttons" x="41" y="210">100</text>
 
-	<rect id="fiftyb" class="recbord" width="90" height="70" x="130" y="152" fill="#37a9c8" />
-	<rect id="fiftyf" class="recfill" width="86" height="66" x="132" y="154" />
-	<text id="fifty" class="buttons" x="152" y="200">50</text>
+	<rect id="fiftyb" class="recbord" width="90" height="70" x="130" y="162" fill="#37a9c8" />
+	<rect id="fiftyf" class="recfill" width="86" height="66" x="132" y="164" />
+	<text id="fifty" class="buttons" x="152" y="210">50</text>
 
-	<rect id="tenb" class="recbord" width="90" height="70" x="231" y="152" fill="#37a9c8" />
-	<rect id="tenf" class="recfill" width="86" height="66" x="233" y="154" />
-	<text id="ten" class="buttons" x="253" y="200">10</text>
+	<rect id="tenb" class="recbord" width="90" height="70" x="231" y="162" fill="#37a9c8" />
+	<rect id="tenf" class="recfill" width="86" height="66" x="233" y="164" />
+	<text id="ten" class="buttons" x="253" y="210">10</text>
 
 
 </svg>

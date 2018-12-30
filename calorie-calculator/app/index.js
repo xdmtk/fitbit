@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import document from "document";
+import clock from "clock";
 
 const elemCalories = document.getElementById("total-cals");
 const text100 = document.getElementById("hundred");
@@ -53,12 +54,12 @@ function addSubtractMod(action) {
 	}
 	else if (action === "flip") {
 		if (buttonPm.text === "+") {
-			console.log("flipping to subtract";
+			console.log("flipping to subtract");
 			plusMin = "subtract";
 			buttonPm.text = "-";
 		}
 		else {
-			console.log("flipping to add";
+			console.log("flipping to add");
 			plusMin = "add";
 			buttonPm.text = "+";
 		}
