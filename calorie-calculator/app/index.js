@@ -2,6 +2,7 @@ import * as fs from "fs";
 import document from "document";
 import clock from "clock";
 
+const dateText = document.getElementById("date-title");
 const elemCalories = document.getElementById("total-cals");
 const text100 = document.getElementById("hundred");
 const text50 = document.getElementById("fifty");
@@ -21,6 +22,7 @@ const fillbuttonPm = document.getElementById("plus-buttonf");
 
 var plusMin;
 var totalCals;
+var datevar;
 /*
 let data = fs.readFileSync("ascii.txt", "ascii");
 
@@ -38,6 +40,12 @@ else {
 function main() {
 	loadCaloricData();
 	setupButtonHandlers();
+	
+	clock.granularity = 'hours';
+	clock.ontick = function (evt) {
+		datevar = evt.date;
+		setDateStr();
+	}
 }
 
 
@@ -132,6 +140,34 @@ function addSubtractCals(amount) {
 	let totalCalStr = totalCals + "";
 	fs.writeFileSync("cd.txt", totalCalStr, "ascii");
 }
+
+
+function dateStr() {
+	let month = datevar.getMonth()+1;
+	let date = datevar.getDate();
+	let year = datevar.getYear()-100;
+	
+	month = padDigit(month);
+	date = padDigit(date);
+	
+	return month + "/" + date + "/" + year;
+}
+
+function padDigit(digit) {
+	if (digit < 10) {
+		return "0" + digit;
+	}
+	else {
+		return digit;
+	}
+}
+
+function setDateStr() {
+	dateText.text = "Caloric Data for - " + dateStr();
+}
+
+
+
 
 
 

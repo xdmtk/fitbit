@@ -1,7 +1,7 @@
 <svg>
 	<rect id="background" />
 
-	<text id="date-title" x="65" y="20" font-size="18" fill="white">Caloric Data for - 12/12/18</text>
+	<text id="date-title" text-length="96" x="65" y="20" font-size="18" fill="white"></text>
 	<line x1="0" x2="348" y1="28" y2="28" fill="#37c857" />
 
 	<!-- Main calorie display -->
