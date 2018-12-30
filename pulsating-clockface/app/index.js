@@ -1,4 +1,4 @@
-import { HeartRateSensor } from "heart-rate";
+import `{ HeartRateSensor } from "heart-rate";
 import document from "document";
 import { display } from "display";
 import clock from "clock";
@@ -11,6 +11,7 @@ import { display } from "display";
 
 
 
+// ID's
 const doc = document.getElementById("foo");
 const bgImage = document.getElementById("background-frame");
 const l1 = document.getElementById("line1");
@@ -18,36 +19,47 @@ const l2 = document.getElementById("line2");
 const l3 = document.getElementById("line3");
 const l4 = document.getElementById("line4");
 const l5 = document.getElementById("line5");
+
+// Message Vars
 const lineLimit = 21;
 const msgList = [ devStatsStr, healthStatsStr ];
 
 
-
+// Misc
 var bashStr = "#!/bin/bash";
 var frameNumber = 0;
 var frameString = "";
 var f = true;
+
+// Clock and BG 
 var ticker = false;
 var pulser;
 var datevar;
+
+// Dev stats
 var date;
 var time;
 var batPercent;
-var calories;
 var mem;
+
+// Health data
 var dist;
+var calories;
 var steps
+
+// Heart Rate
 var hbpm;
-var elev;
 var hrm;
 
+// Barometer
+var bar;
+var elev;
+
+// Writer globals
 var writing = false;
 var abortWrite = false;
 var msgenum = 0;
 
-
-
-var tb = true;
 
 /* 
  *
@@ -92,11 +104,11 @@ function setupEventHandlers() {
 	console.log("disabling autoff");
 	display.addEventListener("change", function(event) {
 		if (!display.on) {
-			hrm.stop();
+			sensorControl("stop");
 			console.log("stopping sensors");
 		}
 		else {
-			hrm.start();
+			sensorControl("start");
 			console.log("starting sensors");
 		}
 	});
@@ -104,7 +116,6 @@ function setupEventHandlers() {
 
 	
 }
-
 
 
 
@@ -135,6 +146,8 @@ function healthStatsStr() {
 
 
 function envStatsStr() {
+	let e = "$ altitude -> " + elev;
+
 	console.log("foo");
 }
 
@@ -372,6 +385,9 @@ function msgCycler() {
 }
 
 
+function altitudeFromPressure(pressure) {
+	  return (1 - (pressure/1013.25)**0.190284)*145366.45;
+}
 
 
 
@@ -414,6 +430,36 @@ function startHrm(){
 		hbpm = hrm.heartRate;
 	}
 	hrm.start();
+}
+
+
+function startBrm() {
+
+	bar = new Barometer();
+	bar.onreading = function()  {
+		elev = altitudeFromPressure(bar.pressure / 100);
+	}
+
+	// Begin monitoring the sensor
+	bar.start();
+}
+
+
+
+/* 
+ *
+ * Sensor Master Controls
+ *
+ */
+function sensorControl(control) {
+	if (control === "start") {
+		hrm.start();
+		bar.star();
+	}
+	else if (control === "stop") {
+		hrm.stop();
+		bar.stop();
+	}
 }
 
 
