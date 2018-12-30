@@ -12,19 +12,19 @@
 }
 
 #total-cals {
-	font-style: bold;
+	font-family: System-Bold;
 	font-size: 64;
 	fill: #37c89f;
 }
 
-#total-cals-fill {
-  width: 81%;
-  height: 36%;
+#recfill {
   fill: black;
+  rx: 15;
+  ry: 15;
 }
 
-#total-cals-bord {
-  width: 83%;
-  height: 38%;
+#recbord {
   fill: #37c856;
+  rx: 15;
+  ry: 15;
 }
