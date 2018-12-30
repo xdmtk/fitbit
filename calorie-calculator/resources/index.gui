@@ -5,8 +5,14 @@
 	<rect id="recfill" width="81%" height="36%" x="35" y="30" />
 	<text id="total-cals" x="109" y="95" >2777</text>
 
-	<rect id="recbord" width="90" height="70" x="31" y="152" />
-	<rect id="recfill" width="86" height="66" x="33" y="154" />
+	<rect id="recbord" width="90" height="70" x="29" y="152" fill="#37a9c8" />
+	<rect id="recfill" width="86" height="66" x="31" y="154" />
+
+	<rect id="recbord" width="90" height="70" x="130" y="152" fill="#37a9c8" />
+	<rect id="recfill" width="86" height="66" x="132" y="154" />
+
+	<rect id="recbord" width="90" height="70" x="231" y="152" fill="#37a9c8" />
+	<rect id="recfill" width="86" height="66" x="233" y="154" />
 
 
 </svg>
