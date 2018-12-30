@@ -1,0 +1,9 @@
+<svg>
+  <rect id="background" />
+  
+  <rect id="total-cals-bord" x="31" y="27" rx="15" ry="15" />
+  <rect id="total-cals-fill" x="35" y="30" rx="15" ry="15" />
+  <text id="total-cals" x="109" y="95" >2777</text>
+
+
+</svg>

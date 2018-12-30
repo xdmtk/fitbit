@@ -1,0 +1,30 @@
+.defaultText {
+  font-size: 32;
+  font-family: System-Regular;
+  font-weight: regular;
+  text-length: 32;
+}
+
+#background {
+  width: 100%;
+  height: 100%;
+  fill: black;
+}
+
+#total-cals {
+	font-style: bold;
+	font-size: 64;
+	fill: #37c89f;
+}
+
+#total-cals-fill {
+  width: 81%;
+  height: 36%;
+  fill: black;
+}
+
+#total-cals-bord {
+  width: 83%;
+  height: 38%;
+  fill: #37c856;
+}
