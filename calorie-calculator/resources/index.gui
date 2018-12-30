@@ -1,10 +1,19 @@
 <svg>
 	<rect id="background" />
 
-	<rect id="recbord" width="83%" height="38%" x="31" y="27" />
-	<rect id="recfill" width="81%" height="36%" x="35" y="30" />
-	<text id="total-cals" x="109" y="95" >2777</text>
+	<!-- Main calorie display -->
+	<rect id="recbord" width="57%" height="38%" x="29" y="27" />
+	<rect id="recfill" width="55%" height="36%" x="33" y="30" />
+	<text id="total-cals" x="59" y="95" >2777</text>
 
+
+	<!-- Plus / Minus button -->
+	<rect id="recbord" width="80" height="70" x="240" y="41" fill="#9f37c8" />
+	<rect id="recfill" width="76" height="66" x="242" y="44" />
+	<text id="plus-button" x="261" y="94">+</text>
+
+
+	<!-- Three calorie value buttons -->
 	<rect id="recbord" width="90" height="70" x="29" y="152" fill="#37a9c8" />
 	<rect id="recfill" width="86" height="66" x="31" y="154" />
 	<text id="buttons" x="41" y="200">100</text>

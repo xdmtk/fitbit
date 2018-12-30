@@ -22,6 +22,11 @@
 	fill: #37c89f;
 }
 
+#plus-button {
+	font-family: System-Bold;
+	font-size: 78;
+	fill: #37c89f;
+}
 #recfill {
   fill: black;
   rx: 15;
