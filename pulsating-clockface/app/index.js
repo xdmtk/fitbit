@@ -28,7 +28,7 @@ const l5 = document.getElementById("line5");
 
 // Message Vars
 const lineLimit = 21;
-const msgList = [ devStatsStr, healthStatsStr, envStatsStr ];
+const msgList = [ devStatsStr, healthStatsStr ];
 
 
 // Misc
