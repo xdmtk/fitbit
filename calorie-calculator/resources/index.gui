@@ -7,12 +7,15 @@
 
 	<rect id="recbord" width="90" height="70" x="29" y="152" fill="#37a9c8" />
 	<rect id="recfill" width="86" height="66" x="31" y="154" />
+	<text id="buttons" x="41" y="200">100</text>
 
 	<rect id="recbord" width="90" height="70" x="130" y="152" fill="#37a9c8" />
 	<rect id="recfill" width="86" height="66" x="132" y="154" />
+	<text id="buttons" x="152" y="200">50</text>
 
 	<rect id="recbord" width="90" height="70" x="231" y="152" fill="#37a9c8" />
 	<rect id="recfill" width="86" height="66" x="233" y="154" />
+	<text id="buttons" x="253" y="200">10</text>
 
 
 </svg>

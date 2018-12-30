@@ -16,6 +16,11 @@
 	font-size: 64;
 	fill: #37c89f;
 }
+#buttons {
+	font-family: System-Bold;
+	font-size: 38;
+	fill: #37c89f;
+}
 
 #recfill {
   fill: black;
