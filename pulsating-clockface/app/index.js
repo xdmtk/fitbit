@@ -475,6 +475,20 @@ function sensorControl(control) {
 }
 
 
+
+
+
+
+
+
+
+
+
+/* 
+ *
+ * BETA: Weather functions
+ *
+ */
 // Request weather data from the companion
 function fetchWeather() {
 	if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
