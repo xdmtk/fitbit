@@ -16,10 +16,11 @@
 	font-size: 64;
 	fill: #37c89f;
 }
-#buttons {
+.buttons {
 	font-family: System-Bold;
 	font-size: 38;
 	fill: #37c89f;
+    pointer-events: visible;
 }
 
 #plus-button {
@@ -27,14 +28,16 @@
 	font-size: 78;
 	fill: #37c89f;
 }
-#recfill {
+.recfill {
   fill: black;
   rx: 15;
   ry: 15;
+  pointer-events: visible;
 }
 
-#recbord {
+.recbord {
   fill: #37c856;
   rx: 15;
   ry: 15;
+  pointer-events: visible;
 }
