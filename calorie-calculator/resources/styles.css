@@ -23,7 +23,12 @@
 	fill: black;
 }
 
-#name-user {
+#name-user-xenia {
+	font-family: System-Bold;
+	font-size: 54;
+	fill: #37c89f;
+}
+#name-user-nick {
 	font-family: System-Bold;
 	font-size: 54;
 	fill: #37c89f;

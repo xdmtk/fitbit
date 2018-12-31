@@ -20,9 +20,20 @@ const buttonPm = document.getElementById("plus-button");
 const bordbuttonPm = document.getElementById("plus-button");
 const fillbuttonPm = document.getElementById("plus-buttonf");
 
+const loginForm = document.getElementsByClassName("login");
+
+const xeniaf = document.getElementById("xenia-login-buttonf");
+const xenia = document.getElementById("xenia-login-button");
+const xeniat = document.getElementById("name-user-xenia");
+
+const nickf = document.getElementById("nick-login-buttonf");
+const nick = document.getElementById("nick-login-button");
+const nickt = document.getElementById("name-user-nick");
+
 var plusMin;
 var totalCals;
 var datevar;
+var user;
 /*
 let data = fs.readFileSync("ascii.txt", "ascii");
 
@@ -50,14 +61,13 @@ function main() {
 
 function checkUser() {
 	console.log("in checkuser");
-	///if (fs.readFileSync("user.txt", "ascii") === "") {
-
-
-
-
-
-
-
+	if (fs.readFileSync("user.txt", "ascii") === "") {
+		loginForm.style.display = "inherit";
+	}
+	else {
+		loginForm.style.display = "none";
+		user = fs.readFileSync("user.txt", "ascii");
+	}
 }
 
 
@@ -124,9 +134,9 @@ function setupButtonHandlers() {
 	bord50.onclick =  function() { addSubtractCals(50); }
 	bord10.onclick = function() { addSubtractCals(10); }
 
-	buttonPm.onclick = function() { addSubtractMod("flip"); }
-	bordbuttonPm.onclick = function() { addSubtractMod("flip"); }
-	fillbuttonPm.onclick = function() { addSubtractMod("flip"); }
+	buttonpm.onclick = function() { addsubtractmod("flip"); }
+	bordbuttonpm.onclick = function() { addsubtractmod("flip"); }
+	fillbuttonpm.onclick = function() { addsubtractmod("flip"); }
 
 }
 
