@@ -5,19 +5,38 @@ import { geolocation } from "geolocation";
 var latitude;
 var longitude;
 var ENDPOINT;
-
-geolocation.getCurrentPosition(function(position) {
-	
-	console.log("getting coordinates");
-	latitude = position.coords.latitude;
-	longitude = position.coords.longitude;
-	ENDPOINT = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude;
-})
-
 var API_KEY = "2e5f8a30167b5b71a8792cc9e09f94bc";
 
-// Fetch the weather from OpenWeather
 function queryOpenWeather() {
+	console.log("in query open weather");
+	geolocation.getCurrentPosition(geolocSuccess, geolocFail)
+}
+
+
+
+function geolocSuccess(position) {
+
+		console.log("getting coordinates");
+		latitude = position.coords.latitude;
+		longitude = position.coords.longitude;
+		console.log("latitude: " + latitude + " - longitute " + longitude);
+		
+		ENDPOINT = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude;
+
+		console.log("endpoint: " + ENDPOINT);
+		queryOpenWeatherFollow();
+
+}
+
+function geolocFail(error) {
+	console.log("geolocation failed: " + error.code + " " + error.message);
+	queryOpenWeather();
+}
+
+
+
+// Fetch the weather from OpenWeather
+function queryOpenWeatherFollow() {
 	if ((latitude !== undefined) && (longitude !== undefined)) {
 		fetch(ENDPOINT + "&APPID=" + API_KEY)
 		.then(function (response) {
@@ -28,7 +47,7 @@ function queryOpenWeather() {
 				var weather = {
 					temperature: data["main"]["temp"],
 					city: data["name"],
-					condition: data["weather"]["main"]
+					condition: data["weather"][0]["main"]
 				}
 				// Send the weather data to the device
 				returnWeatherData(weather);
@@ -37,6 +56,9 @@ function queryOpenWeather() {
 		.catch(function (err) {
 			console.log("Error fetching weather: " + err);
 		});
+	}
+	else {
+		console.log("geoloc was undefined");
 	}
 }
 

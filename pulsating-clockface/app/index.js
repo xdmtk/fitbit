@@ -510,6 +510,8 @@ function fetchWeather() {
 // Display the weather data received from the companion
 function processWeatherData(data) {
 	console.log("The temperature is: " + data.temperature);
+	console.log("The city is: " + data.city);
+	console.log("The conditions are: " + data.condition);
 }
 
 
