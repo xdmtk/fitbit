@@ -138,6 +138,29 @@ function setupButtonHandlers() {
 	bordbuttonpm.onclick = function() { addsubtractmod("flip"); }
 	fillbuttonpm.onclick = function() { addsubtractmod("flip"); }
 
+	nick.onclick = function() { 
+	nickf.onclick = function() {
+	nickt.onclick = function() { 
+
+	xenia.onclick = function() {
+	xeniaf.onclick = function() {
+	xeniat.onclick =function() {
+
+
+}
+
+function login(userParam) {
+	fs.writeFileSync("user.txt". userParam, "ascii");
+	let fader = setInterval(function () {
+		loginForm.style.opacity -= .1;
+		if (loginForm.style.opacity === 0) {
+			clearInterval(fader);
+		}
+	}, 100);
+	setTimeout(function () {
+		loginForm.style.display = "none";
+		setDateStr();
+	}, 1000);
 }
 
 
@@ -186,7 +209,14 @@ function padDigit(digit) {
 }
 
 function setDateStr() {
-	dateText.text = "Caloric Data for - " + dateStr();
+	if (user === undefined) {
+		dateText.text = "Caloric Data for - " + dateStr();
+	}
+	else {
+		dateText.text = "Welcome " + user + " - Caloric Data for - " + dateStr();
+		dateText.x -= 40;
+	}
+
 }
 
 
