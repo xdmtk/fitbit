@@ -339,10 +339,14 @@ function write(text) {
 
 			// Clear if all lines filled
 			if ((x === 6) || (abortWrite)) {
+				console.log("clearing terminal");
 				clearInterval(writer);
-				clearTerminal();
 				if (abortWrite) {
 					abortWrite = !abortWrite;
+					clearTerminal("now");
+				}
+				else {
+					clearTerminal();
 				}
 			}
 
@@ -359,14 +363,23 @@ function write(text) {
 }
 
 
-function clearTerminal() {
-	setTimeout(function () {
+function clearTerminal(timing="none") {
+	if (timing === "now") {
 		for (let x = 1; x < 6; ++x) {
 			let id = document.getElementById("line" + x);
 			id.text = "";
 		}
 		writing = false;
-	}, 1250);
+	}
+	else {
+		setTimeout(function () {
+			for (let x = 1; x < 6; ++x) {
+				let id = document.getElementById("line" + x);
+				id.text = "";
+			}
+			writing = false;
+		}, 1250);
+	}
 
 
 }
