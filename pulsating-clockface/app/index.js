@@ -27,8 +27,8 @@ const l4 = document.getElementById("line4");
 const l5 = document.getElementById("line5");
 
 // Message Vars
-const lineLimit = 21;
-const msgList = [ devStatsStr, healthStatsStr ];
+const lineLimit = 25;
+const msgList = [ devStatsStr, healthStatsStr, envStatsStr];
 
 
 // Misc
@@ -60,6 +60,11 @@ var hrm;
 // Barometer
 var bar;
 var elev;
+
+// Weather
+var temperature;
+var conditions;
+var city;
 
 // Writer globals
 var writing = false;
@@ -158,11 +163,11 @@ function healthStatsStr() {
 
 function envStatsStr() {
 	setEnvStats();	
+	let w = "$ weather -> " + temperature + "F";
+	let c = "$ city -> " + city;
+	let co = "$ cur -> " + conditions;
 	let e = "$ altitude -> " + elev + "ft";
-	let f = "$ floors -> 777";
-	let c = "$ city -> g. hills";
-	let w = "$ weather -> --F";
-	return bashStr + " -env" + e + f + c + w;
+	return bashStr + " -env" + w + c + co + e;
 }
 
 
@@ -195,6 +200,15 @@ function setEnvStats() {
 	}
 	else {
 		elev = elev.toFixed(0);
+	}
+	if (temperature === undefined) {
+		temperature = "--";
+	}
+	if (conditions === undefined) {
+		conditions = "--";
+	}
+	if (city === undefined) {
+		city = "--";
 	}
 }
 
@@ -352,7 +366,7 @@ function clearTerminal() {
 			id.text = "";
 		}
 		writing = false;
-	}, 750);
+	}, 1250);
 
 
 }
@@ -510,6 +524,13 @@ function fetchWeather() {
 // Display the weather data received from the companion
 function processWeatherData(data) {
 	console.log("The temperature is: " + data.temperature);
+	console.log("The city is: " + data.city);
+	console.log("The conditions are: " + data.condition);
+	
+	temperature = ((data.temperature*1.8)- 459.67).toFixed(0);
+	city = data.city;
+	conditions = data.condition;
+
 }
 
 
@@ -517,6 +538,7 @@ function setupWeatherModule() {
 	// Listen for the onopen event
 	messaging.peerSocket.onopen = function() {
 		// Fetch weather when the connection opens
+		console.log("fetching weather");
 		fetchWeather();
 	}
 
@@ -533,6 +555,7 @@ function setupWeatherModule() {
 	console.log("Connection error: " + err.code + " - " + err.message);
 	}
 
+	console.log("setting interval");
 	// Fetch the weather every 30 minutes
 	setInterval(fetchWeather, 30 * 1000 * 60);
 }

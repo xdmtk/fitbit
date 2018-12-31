@@ -1,27 +1,65 @@
 // Import the messaging module
 import * as messaging from "messaging";
+import { geolocation } from "geolocation";
 
+var latitude;
+var longitude;
+var ENDPOINT;
 var API_KEY = "2e5f8a30167b5b71a8792cc9e09f94bc";
-var ENDPOINT = "https://api.openweathermap.org/data/2.5/weather" +
-"?q=San%20Francisco,USA&units=imperial";
+
+function queryOpenWeather() {
+	console.log("in query open weather");
+	geolocation.getCurrentPosition(geolocSuccess, geolocFail)
+}
+
+
+
+function geolocSuccess(position) {
+
+		console.log("getting coordinates");
+		latitude = position.coords.latitude;
+		longitude = position.coords.longitude;
+		console.log("latitude: " + latitude + " - longitute " + longitude);
+		
+		ENDPOINT = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude;
+
+		console.log("endpoint: " + ENDPOINT);
+		queryOpenWeatherFollow();
+
+}
+
+function geolocFail(error) {
+	console.log("geolocation failed: " + error.code + " " + error.message);
+	queryOpenWeather();
+}
+
+
 
 // Fetch the weather from OpenWeather
-function queryOpenWeather() {
-	fetch(ENDPOINT + "&APPID=" + API_KEY)
-	.then(function (response) {
-		response.json()
-		.then(function(data) {
-			// We just want the current temperature
-			var weather = {
-				temperature: data["main"]["temp"]
-			}
-			// Send the weather data to the device
-			returnWeatherData(weather);
+function queryOpenWeatherFollow() {
+	if ((latitude !== undefined) && (longitude !== undefined)) {
+		fetch(ENDPOINT + "&APPID=" + API_KEY)
+		.then(function (response) {
+			console.log(response);
+			response.json()
+			.then(function(data) {
+				// We just want the current temperature
+				var weather = {
+					temperature: data["main"]["temp"],
+					city: data["name"],
+					condition: data["weather"][0]["main"]
+				}
+				// Send the weather data to the device
+				returnWeatherData(weather);
+			});
+		})
+		.catch(function (err) {
+			console.log("Error fetching weather: " + err);
 		});
-	})
-	.catch(function (err) {
-		console.log("Error fetching weather: " + err);
-	});
+	}
+	else {
+		console.log("geoloc was undefined");
+	}
 }
 
 // Send the weather data to the device
