@@ -48,6 +48,19 @@ function main() {
 	}
 }
 
+function checkUser() {
+	console.log("in checkuser");
+	///if (fs.readFileSync("user.txt", "ascii") === "") {
+
+
+
+
+
+
+
+}
+
+
 
 
 function addSubtractMod(action) {

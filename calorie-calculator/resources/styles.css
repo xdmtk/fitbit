@@ -5,11 +5,30 @@
   text-length: 32;
 }
 
-#background {
+.background {
   width: 100%;
   height: 100%;
   fill: black;
 }
+
+.login {
+	display: inherit;
+
+}
+
+
+#login-bg {
+	width: 100%;
+	height: 100%;
+	fill: black;
+}
+
+#name-user {
+	font-family: System-Bold;
+	font-size: 54;
+	fill: #37c89f;
+}
+
 
 #total-cals {
 	font-family: System-Bold;

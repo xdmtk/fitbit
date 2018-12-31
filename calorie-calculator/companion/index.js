@@ -11,3 +11,6 @@ const WAKEUP_TIMER = 4 * HOUR_MULTIPLIER * MIN_MULTIPLIER;
 function main() {
 	console.log("fuck you");
 }
+
+
+main();

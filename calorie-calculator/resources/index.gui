@@ -1,5 +1,8 @@
 <svg>
-	<rect id="background" />
+
+
+
+	<rect id="main-screen" class="background" />
 
 	<text id="date-title" text-length="96" x="65" y="20" font-size="18" fill="white"></text>
 	<line x1="0" x2="348" y1="28" y2="28" fill="#37c857" />
@@ -30,4 +33,18 @@
 	<text id="ten" class="buttons" x="253" y="210">10</text>
 
 
+
+	<!-- Login Form -->
+	<rect id="login-bg" class="login" />
+
+	<text id="login-welcome" class="login" text-length="96" x="127" y="20" font-size="18" fill="white">Please Login</text>
+	<line class="login" x1="0" x2="348" y1="28" y2="28" fill="#37c857" />
+
+	<rect class="recbord login" width="57%" height="28%" x="74" y="57" />
+	<rect class="recfill login" width="55%" height="26%" x="78" y="60" />
+	<text id="name-user" x="112" y="110" >Xenia</text>
+
+	<rect class="recbord login" width="57%" height="28%" x="74" y="147" />
+	<rect class="recfill login" width="55%" height="26%" x="78" y="150" />
+	<text id="name-user" x="118" y="200" >Nick</text>
 </svg>
