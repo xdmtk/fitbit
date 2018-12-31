@@ -1,27 +1,43 @@
 // Import the messaging module
 import * as messaging from "messaging";
+import { geolocation } from "geolocation";
+
+var latitude;
+var longitude;
+var ENDPOINT;
+
+geolocation.getCurrentPosition(function(position) {
+	
+	console.log("getting coordinates");
+	latitude = position.coords.latitude;
+	longitude = position.coords.longitude;
+	ENDPOINT = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude;
+})
 
 var API_KEY = "2e5f8a30167b5b71a8792cc9e09f94bc";
-var ENDPOINT = "https://api.openweathermap.org/data/2.5/weather" +
-"?q=San%20Francisco,USA&units=imperial";
 
 // Fetch the weather from OpenWeather
 function queryOpenWeather() {
-	fetch(ENDPOINT + "&APPID=" + API_KEY)
-	.then(function (response) {
-		response.json()
-		.then(function(data) {
-			// We just want the current temperature
-			var weather = {
-				temperature: data["main"]["temp"]
-			}
-			// Send the weather data to the device
-			returnWeatherData(weather);
+	if ((latitude !== undefined) && (longitude !== undefined)) {
+		fetch(ENDPOINT + "&APPID=" + API_KEY)
+		.then(function (response) {
+			console.log(response);
+			response.json()
+			.then(function(data) {
+				// We just want the current temperature
+				var weather = {
+					temperature: data["main"]["temp"],
+					city: data["name"],
+					condition: data["weather"]["main"]
+				}
+				// Send the weather data to the device
+				returnWeatherData(weather);
+			});
+		})
+		.catch(function (err) {
+			console.log("Error fetching weather: " + err);
 		});
-	})
-	.catch(function (err) {
-		console.log("Error fetching weather: " + err);
-	});
+	}
 }
 
 // Send the weather data to the device

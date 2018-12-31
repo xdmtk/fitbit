@@ -517,6 +517,7 @@ function setupWeatherModule() {
 	// Listen for the onopen event
 	messaging.peerSocket.onopen = function() {
 		// Fetch weather when the connection opens
+		console.log("fetching weather");
 		fetchWeather();
 	}
 
@@ -533,6 +534,7 @@ function setupWeatherModule() {
 	console.log("Connection error: " + err.code + " - " + err.message);
 	}
 
+	console.log("setting interval");
 	// Fetch the weather every 30 minutes
 	setInterval(fetchWeather, 30 * 1000 * 60);
 }
