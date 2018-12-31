@@ -366,7 +366,7 @@ function clearTerminal() {
 			id.text = "";
 		}
 		writing = false;
-	}, 750);
+	}, 1250);
 
 
 }
