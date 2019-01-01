@@ -25,15 +25,19 @@ const loginForm = document.getElementsByClassName("login");
 const xeniaf = document.getElementById("xenia-login-buttonf");
 const xenia = document.getElementById("xenia-login-button");
 const xeniat = document.getElementById("name-user-xenia");
+const xeniac = document.getElementById("click-area-xenia");
 
 const nickf = document.getElementById("nick-login-buttonf");
 const nick = document.getElementById("nick-login-button");
 const nickt = document.getElementById("name-user-nick");
+const nickc = document.getElementById("click-area-nick");
+
 
 var plusMin;
 var totalCals;
 var datevar;
 var user;
+var loggingIn = false;
 /*
 let data = fs.readFileSync("ascii.txt", "ascii");
 
@@ -47,8 +51,12 @@ else {
 	fs.writeFileSync("ascii.txt", ascii_data, "ascii");
 }
 */
-
+var debug = false;
 function main() {
+	if (debug) {
+		debugUser();
+	}
+	checkUser();
 	loadCaloricData();
 	setupButtonHandlers();
 	
@@ -59,15 +67,33 @@ function main() {
 	}
 }
 
+function debugUser() {
+	fs.writeFileSync("user.txt", "", "ascii");
+}
+
+
+
 function checkUser() {
 	console.log("in checkuser");
-	if (fs.readFileSync("user.txt", "ascii") === "") {
-		loginForm.style.display = "inherit";
+	try {
+		if (fs.readFileSync("user.txt", "ascii") === "") {
+			loginForm.forEach(function(elem) {
+				elem.style.display = "inherit";
+			});
+		}
+		else {
+			loginForm.forEach(function(elem) {
+				elem.style.display = "none";
+			});
+			user = fs.readFileSync("user.txt", "ascii");
+		}
 	}
-	else {
-		loginForm.style.display = "none";
-		user = fs.readFileSync("user.txt", "ascii");
+	catch {
+		loginForm.forEach(function(elem) {
+			elem.style.display = "inherit";
+		});
 	}
+
 }
 
 
@@ -134,33 +160,59 @@ function setupButtonHandlers() {
 	bord50.onclick =  function() { addSubtractCals(50); }
 	bord10.onclick = function() { addSubtractCals(10); }
 
-	buttonpm.onclick = function() { addsubtractmod("flip"); }
-	bordbuttonpm.onclick = function() { addsubtractmod("flip"); }
-	fillbuttonpm.onclick = function() { addsubtractmod("flip"); }
+	buttonPm.onclick = function() { addSubtractMod("flip"); }
+	bordbuttonPm.onclick = function() { addSubtractMod("flip"); }
+	fillbuttonPm.onclick = function() { addSubtractMod("flip"); }
 
-	nick.onclick = function() { 
-	nickf.onclick = function() {
-	nickt.onclick = function() { 
+	nick.onclick = function() { login("nick"); }
+	nickf.onclick = function() { login("nick"); }
+	nickt.onclick = function() {  login("nick"); }
+	nickc.onclick = function() {  login("nick"); }
 
-	xenia.onclick = function() {
-	xeniaf.onclick = function() {
-	xeniat.onclick =function() {
+	xenia.onclick = function() { login("xenia"); }
+	xeniaf.onclick = function() { login("xenia"); }
+	xeniat.onclick =function() { login("xenia"); }
+	xeniac.onclick =function() { login("xenia"); }
 
 
 }
 
 function login(userParam) {
-	fs.writeFileSync("user.txt". userParam, "ascii");
-	let fader = setInterval(function () {
-		loginForm.style.opacity -= .1;
-		if (loginForm.style.opacity === 0) {
-			clearInterval(fader);
+	if (!loggingIn) {
+		console.log("in login with " + userParam);
+		user = userParam;
+		if (userParam === "nick") {
+			nickf.fill = "white";
+			setTimeout(function() {
+				nickf.fill = "black";
+			}, 20);
 		}
-	}, 100);
-	setTimeout(function () {
-		loginForm.style.display = "none";
+		else {
+			xeniaf.fill = "white";
+			setTimeout(function() {
+				xeniaf.fill = "black";
+			}, 20);
+		}
+
+		loggingIn = !loggingIn;
+		var u = userParam + "";
+		fs.writeFileSync("user.txt", u, "ascii");
+		let fader = setInterval(function () {
+			loginForm.forEach(function(elem) {
+				elem.opacity -= .1;
+			});
+		}, 100);
+		setTimeout(function () {
+			clearInterval(fader);
+			loginForm.forEach(function(elem) {
+				elem.style.display = "none";
+			});
+		}, 100);
 		setDateStr();
-	}, 1000);
+	}
+	else {
+		console.log("handler already activated");
+	}
 }
 
 
@@ -214,7 +266,7 @@ function setDateStr() {
 	}
 	else {
 		dateText.text = "Welcome " + user + " - Caloric Data for - " + dateStr();
-		dateText.x -= 40;
+		dateText.x -= 60;
 	}
 
 }
