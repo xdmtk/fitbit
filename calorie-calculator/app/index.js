@@ -42,7 +42,7 @@ var datevar;
 var user;
 var loggingIn = false;
 var debug = false;
-
+var inputDate;
 
 
 
@@ -65,14 +65,23 @@ function main() {
 
 function loadCaloricData() {
 	let data = fs.readFileSync("cd.txt", "ascii");
+	let dataFields = data.split(",");
 
-	if (data) {
+	if (dataFields.length > 1) {
 		console.log("Read data: " + data);
-		totalCals = parseInt(data);
+		totalCals = parseInt(dataFields[0]);
+		inputDate = dataFields[1];
+		
+		if (inputDate !== getDateStr()) {
+			let ascii_data = "0," + getDateStr();
+			fs.writeFileSync("cd.txt", ascii_data, "ascii");
+			totalCals = 0;
+			inputDate === getDateStr();
+		}
 
 	}
 	else {
-		let ascii_data = "0";
+		let ascii_data = "0," + getDateStr();
 		fs.writeFileSync("cd.txt", ascii_data, "ascii");
 		totalCals = 0;
 	}
@@ -103,11 +112,24 @@ function addSubtractCals(amount) {
 			totalCals = 0;
 		}
 	}
+
+
 	elemCalories.text = totalCals;
-	let totalCalStr = totalCals + "";
+	let totalCalStr = totalCals + "," + getDateStr();
 	fs.writeFileSync("cd.txt", totalCalStr, "ascii");
 	sendMessage(totalCals);
 }
+
+
+function getDateStr() {
+	var datevar = new Date();
+	let month = datevar.getMonth()+1;
+	let date = datevar.getDate();
+	let year = datevar.getYear()-100;
+	
+	return month + "/" + date + "/" + year;
+}
+
 
 
 function addSubtractMod(action) {
