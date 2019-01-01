@@ -105,7 +105,7 @@ function addSubtractCals(amount) {
 	elemCalories.text = totalCals;
 	let totalCalStr = totalCals + "";
 	fs.writeFileSync("cd.txt", totalCalStr, "ascii");
-
+	sendMessage(totalCals);
 }
 
 
@@ -252,9 +252,11 @@ function setupMessaging() {
 function sendMessage(data) {
 	if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
 		console.log("sending data: " + data);
-		messaging.peerSocket.send(data);
+		messaging.peerSocket.send(user + "," data);
 	}
-	console.log("Connection is closed, cant send data");
+	else {
+		console.log("Connection is closed, cant send data");
+	}
 }
 
 

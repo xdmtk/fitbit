@@ -1,6 +1,7 @@
 import { createRequest } from "endpoint";
 import { me } from "companion";
-import { localStorage } from "local-storaddge";
+import { localStorage } from "local-storage";
+import * as messaging from "messaging";
 
 
 const MIN_MULTIPLIER = 1000 * 60;
@@ -16,21 +17,43 @@ function main() {
 
 function setupMessaging() {
 	messaging.peerSocket.onopen = function() {
-		socketReady = true;
 		console.log("Companion connection established, ready to send msg");
 	}
 	messaging.peerSocket.onerror = function(err) {
 		console.log("Connection error: " + err.code + " - " + err.message);
-		socketReady = false;
 
 	}
 	messaging.peerSocket.onmessage = function(evt) {
-			var cal = evt.data;
-			localStorage.setItem("calories", cal);
+			var userArr = evt.data.split(",");
+			localStorage.setItem("calories", userArr[1]);
+			localStorage.setItem("user", userArr[0]);
 			console.log("incoming message with data: " + cal + "\nsetting local storage");
+			
+			uploadData();
 	}
 }
 
+function uploadData() {
+	let user = localStorage.getItem("user");
+	let cals = localStorage.getItem("calories");
+	var uid;
+	if (user === "nick") {
+		uid = 0;
+	}
+	else {
+		uid = 1;
+	}
+	let endpoint = createRequest(uid,cals);
+	fetch(endpoint)
+	.then(function(response) {
+		console.log("success fetch" + response) ;
+	})
+	.catch(function(error) {
+		console.log("error fetch" + error) ;
+	});
+
+
+}
 
 
 main();
