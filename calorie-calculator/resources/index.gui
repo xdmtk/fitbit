@@ -40,12 +40,12 @@
 	<text id="login-welcome" class="login" text-length="96" x="127" y="20" font-size="18" fill="white">Please Login</text>
 	<line class="login" x1="0" x2="348" y1="28" y2="28" fill="#37c857" />
 
-	<rect id="click-area-xenia" opacity="0" y="0" x="0" width="348" height="125" />
+	<rect class="login" id="click-area-xenia" opacity="0" y="0" x="0" width="348" height="125" />
 	<rect id="xenia-login-button" class="recbord login" width="57%" height="28%" x="74" y="57" />
 	<rect id="xenia-login-buttonf" class="recfill login" width="55%" height="26%" x="78" y="60" />
 	<text class="login" id="name-user-xenia" x="112" y="110" >Xenia</text>
 	
-	<rect id="click-area-nick" opacity="0" y="125" x="0" width="348" height="125" />
+	<rect class="login" id="click-area-nick" opacity="0" y="125" x="0" width="348" height="125" />
 	<rect id="nick-login-button" class="recbord login" width="57%" height="28%" x="74" y="147" />
 	<rect id="nick-login-buttonf" class="recfill login" width="55%" height="26%" x="78" y="150" />
 	<text class="login" id="name-user-nick" x="118" y="200" >Nick</text>
