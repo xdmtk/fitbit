@@ -54,6 +54,7 @@ function main() {
 	}
 	checkUser();
 	loadCaloricData();
+	alignTotalCals();
 	setupButtonHandlers();
 	
 	clock.granularity = 'hours';
@@ -91,6 +92,22 @@ function loadCaloricData() {
 }
 
 
+function alignTotalCals() {
+	if (totalCals < 10) {
+		elemCalories.x = 109;
+	}
+	else if (totalCals < 100) {
+		elemCalories.x = 99;
+	}
+	else if (totalCals < 1000) {
+		elemCalories.x = 79;
+	}
+	else {
+		elemCalories.x = 59;
+	}
+
+}
+
 
 
 
@@ -120,6 +137,8 @@ function addSubtractCals(amount) {
 	},10);
 
 	elemCalories.text = totalCals;
+	alignTotalCals();
+
 	let totalCalStr = totalCals + "," + getDateStr();
 	fs.writeFileSync("cd.txt", totalCalStr, "ascii");
 	sendMessage(totalCals);
