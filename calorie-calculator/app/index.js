@@ -3,6 +3,8 @@ import document from "document";
 import clock from "clock";
 import * as messaging from "messaging";
 import { today } from "user-activity";
+import { vibration } from "haptics";
+
 
 
 const dateText = document.getElementById("date-title");
@@ -95,6 +97,7 @@ function loadCaloricData() {
 
 /* Add/Subtract Calories */
 function addSubtractCals(amount) {
+	vibration.start("bump");
 	if (plusMin === "add") {
 		if (totalCals + amount < 10000) {
 			totalCals += amount;
@@ -112,7 +115,9 @@ function addSubtractCals(amount) {
 			totalCals = 0;
 		}
 	}
-
+	setTimeout(function() {
+		vibration.stop();
+	},10);
 
 	elemCalories.text = totalCals;
 	let totalCalStr = totalCals + "," + getDateStr();
@@ -133,6 +138,7 @@ function getDateStr() {
 
 
 function addSubtractMod(action) {
+	vibration.start("bump");
 	console.log("in addsubtract mod with action: " + action);
 	if (action === "read") {
 		if (buttonPm.text === "+") {
@@ -154,6 +160,9 @@ function addSubtractMod(action) {
 			buttonPm.text = "+";
 		}
 	}
+	setTimeout(function() {
+		vibration.stop();
+	},10);
 }
 
 
