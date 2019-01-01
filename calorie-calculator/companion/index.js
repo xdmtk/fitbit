@@ -6,12 +6,12 @@ import * as messaging from "messaging";
 
 const MIN_MULTIPLIER = 1000 * 60;
 const HOUR_MULTIPLIER = 60;
-const WAKEUP_TIMER = 4 * HOUR_MULTIPLIER * MIN_MULTIPLIER;
+const WAKEUP_TIMER = 2 * HOUR_MULTIPLIER * MIN_MULTIPLIER;
 
-// me.wakeInterval = WAKEUP_TIMER;
 
 
 function main() {
+	me.wakeInterval = WAKEUP_TIMER;
 	setupMessaging();
 }
 
