@@ -315,7 +315,9 @@ function setDateStr() {
 	}
 	else {
 		dateText.text = "Welcome " + user + " - Caloric Data for - " + dateStr();
-		dateText.x -= 60;
+		if (dateText.x - 60 > 0) {
+			dateText.x -= 60;
+		}
 	}
 
 }
