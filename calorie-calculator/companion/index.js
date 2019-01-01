@@ -25,9 +25,13 @@ function setupMessaging() {
 	}
 	messaging.peerSocket.onmessage = function(evt) {
 			var userArr = evt.data.split(",");
-			localStorage.setItem("calories", userArr[1]);
 			localStorage.setItem("user", userArr[0]);
-			console.log("incoming message with data: " + userArr[1] + "\nsetting local storage");
+			localStorage.setItem("calories", userArr[1]);
+			localStorage.setItem("burned", userArr[2]);
+			console.log("incoming message with data: " +
+				userArr[1] +  " : " + userArr[2] + 
+				" : " + userArr[0] + "\nsetting local storage");
+
 			
 			uploadData();
 	}
@@ -36,7 +40,8 @@ function setupMessaging() {
 function uploadData() {
 	let user = localStorage.getItem("user");
 	let cals = localStorage.getItem("calories");
-	let endpoint = createRequest(user,cals);
+	let burned = localStorage.getItem("burned");
+	let endpoint = createRequest(user,cals,burned);
 	console.log("fetching endpoint: " + endpoint);
 	fetch(endpoint)
 	.then(function(response) {

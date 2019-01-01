@@ -2,6 +2,7 @@ import * as fs from "fs";
 import document from "document";
 import clock from "clock";
 import * as messaging from "messaging";
+import { today } from "user-activity";
 
 
 const dateText = document.getElementById("date-title");
@@ -252,7 +253,7 @@ function setupMessaging() {
 function sendMessage(data) {
 	if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
 		console.log("sending data: " + data);
-		messaging.peerSocket.send(user + "," + data);
+		messaging.peerSocket.send(user + "," + data + "," + today.local.calories);
 	}
 	else {
 		console.log("Connection is closed, cant send data");
