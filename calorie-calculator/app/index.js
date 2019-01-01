@@ -1,6 +1,8 @@
 import * as fs from "fs";
 import document from "document";
 import clock from "clock";
+import * as messaging from "messaging";
+
 
 const dateText = document.getElementById("date-title");
 const elemCalories = document.getElementById("total-cals");
@@ -38,20 +40,11 @@ var totalCals;
 var datevar;
 var user;
 var loggingIn = false;
-/*
-let data = fs.readFileSync("ascii.txt", "ascii");
-
-if (data.length) {
-	let ascii_data = "dicks!";
-	fs.writeFileSync("ascii.txt", ascii_data, "ascii");
-
-}
-else {
-	let ascii_data = "Fuck you you little bitch";
-	fs.writeFileSync("ascii.txt", ascii_data, "ascii");
-}
-*/
 var debug = false;
+
+
+
+
 function main() {
 	if (debug) {
 		debugUser();
@@ -67,36 +60,53 @@ function main() {
 	}
 }
 
-function debugUser() {
-	fs.writeFileSync("user.txt", "", "ascii");
+/* Main Calorie Load */
+
+function loadCaloricData() {
+	let data = fs.readFileSync("cd.txt", "ascii");
+
+	if (data) {
+		console.log("Read data: " + data);
+		totalCals = parseInt(data);
+
+	}
+	else {
+		let ascii_data = "0";
+		fs.writeFileSync("cd.txt", ascii_data, "ascii");
+		totalCals = 0;
+	}
+	elemCalories.text = totalCals;
 }
 
 
 
-function checkUser() {
-	console.log("in checkuser");
-	try {
-		if (fs.readFileSync("user.txt", "ascii") === "") {
-			loginForm.forEach(function(elem) {
-				elem.style.display = "inherit";
-			});
+
+
+
+/* Add/Subtract Calories */
+function addSubtractCals(amount) {
+	if (plusMin === "add") {
+		if (totalCals + amount < 10000) {
+			totalCals += amount;
 		}
 		else {
-			loginForm.forEach(function(elem) {
-				elem.style.display = "none";
-			});
-			user = fs.readFileSync("user.txt", "ascii");
+			totalCals = 9999;
+		}
+
+	}
+	else {
+		if (totalCals - amount >= 0) {
+			totalCals -= amount;
+		}
+		else {
+			totalCals = 0;
 		}
 	}
-	catch {
-		loginForm.forEach(function(elem) {
-			elem.style.display = "inherit";
-		});
-	}
+	elemCalories.text = totalCals;
+	let totalCalStr = totalCals + "";
+	fs.writeFileSync("cd.txt", totalCalStr, "ascii");
 
 }
-
-
 
 
 function addSubtractMod(action) {
@@ -125,22 +135,9 @@ function addSubtractMod(action) {
 
 
 
-function loadCaloricData() {
-	let data = fs.readFileSync("cd.txt", "ascii");
 
-	if (data) {
-		console.log("Read data: " + data);
-		totalCals = parseInt(data);
 
-	}
-	else {
-		let ascii_data = "0";
-		fs.writeFileSync("cd.txt", ascii_data, "ascii");
-		totalCals = 0;
-	}
-	elemCalories.text = totalCals;
-}
-
+/* Event Handlers */
 
 function setupButtonHandlers() {
 	addSubtractMod("read");	
@@ -176,6 +173,9 @@ function setupButtonHandlers() {
 
 
 }
+
+
+/* Login Functions */
 
 function login(userParam) {
 	if (!loggingIn) {
@@ -215,30 +215,54 @@ function login(userParam) {
 	}
 }
 
-
-function addSubtractCals(amount) {
-	if (plusMin === "add") {
-		if (totalCals + amount < 10000) {
-			totalCals += amount;
+function checkUser() {
+	console.log("in checkuser");
+	try {
+		if (fs.readFileSync("user.txt", "ascii") === "") {
+			loginForm.forEach(function(elem) {
+				elem.style.display = "inherit";
+			});
 		}
 		else {
-			totalCals = 9999;
+			loginForm.forEach(function(elem) {
+				elem.style.display = "none";
+			});
+			user = fs.readFileSync("user.txt", "ascii");
 		}
+	}
+	catch {
+		loginForm.forEach(function(elem) {
+			elem.style.display = "inherit";
+		});
+	}
 
-	}
-	else {
-		if (totalCals - amount >= 0) {
-			totalCals -= amount;
-		}
-		else {
-			totalCals = 0;
-		}
-	}
-	elemCalories.text = totalCals;
-	let totalCalStr = totalCals + "";
-	fs.writeFileSync("cd.txt", totalCalStr, "ascii");
 }
 
+
+function setupMessaging() {
+	messaging.peerSocket.onopen = function() {
+		console.log("Companion connection established, ready to send msg");
+	}
+	messaging.peerSocket.onerror = function(err) {
+		console.log("Connection error: " + err.code + " - " + err.message);
+
+	}
+}
+
+function sendMessage(data) {
+	if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
+		console.log("sending data: " + data);
+		messaging.peerSocket.send(data);
+	}
+	console.log("Connection is closed, cant send data");
+}
+
+
+
+
+
+
+/* Aux Functions  */
 
 function dateStr() {
 	let month = datevar.getMonth()+1;
@@ -271,6 +295,9 @@ function setDateStr() {
 
 }
 
+function debugUser() {
+	fs.writeFileSync("user.txt", "", "ascii");
+}
 
 
 
