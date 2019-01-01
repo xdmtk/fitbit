@@ -1,4 +1,4 @@
-import { createRequest } from "endpoint";
+import { createRequest } from "./endpoint";
 import { me } from "companion";
 import { localStorage } from "local-storage";
 import * as messaging from "messaging";
@@ -27,7 +27,7 @@ function setupMessaging() {
 			var userArr = evt.data.split(",");
 			localStorage.setItem("calories", userArr[1]);
 			localStorage.setItem("user", userArr[0]);
-			console.log("incoming message with data: " + cal + "\nsetting local storage");
+			console.log("incoming message with data: " + userArr[1] + "\nsetting local storage");
 			
 			uploadData();
 	}
@@ -36,14 +36,8 @@ function setupMessaging() {
 function uploadData() {
 	let user = localStorage.getItem("user");
 	let cals = localStorage.getItem("calories");
-	var uid;
-	if (user === "nick") {
-		uid = 0;
-	}
-	else {
-		uid = 1;
-	}
-	let endpoint = createRequest(uid,cals);
+	let endpoint = createRequest(user,cals);
+	console.log("fetching endpoint: " + endpoint);
 	fetch(endpoint)
 	.then(function(response) {
 		console.log("success fetch" + response) ;

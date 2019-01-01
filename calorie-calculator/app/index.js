@@ -252,7 +252,7 @@ function setupMessaging() {
 function sendMessage(data) {
 	if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
 		console.log("sending data: " + data);
-		messaging.peerSocket.send(user + "," data);
+		messaging.peerSocket.send(user + "," + data);
 	}
 	else {
 		console.log("Connection is closed, cant send data");
