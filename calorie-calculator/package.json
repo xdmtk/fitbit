@@ -10,8 +10,8 @@
   "fitbit": {
     "appUUID": "be17e029-0498-4847-b89b-4b6293eb0837",
     "appType": "app",
-    "appDisplayName": "Calorie Calculator",
-    "iconFile": "resources/icon.png",
+    "appDisplayName": "Calories",
+    "iconFile": "resources/fire-icon.png",
     "wipeColor": "#ffffff",
     "requestedPermissions": [
 		"access_internet",
