@@ -85,7 +85,12 @@ function main() {
 	startHrm();
 	startBrm();
 	setupEventHandlers();
+	datevar = new Date();
 	setupWeatherModule();
+	if (!writing && (datevar !== undefined)) {
+		write(msgList[msgenum]());
+		msgCycler();
+	}
 	
 	clock.granularity = 'seconds';
 	clock.ontick = function (evt) {
@@ -94,10 +99,6 @@ function main() {
 			pulser = setInterval(function() {
 				pulsate();
 			}, 60);
-		}
-		if (!writing) {
-			write(msgList[msgenum]());
-			msgCycler();
 		}
 	};
 }
@@ -111,8 +112,11 @@ function main() {
  */
 function setupEventHandlers() {
 	doc.onmousedown = function () {
-		abortWrite = true;
 		console.log("mouse press");
+		clearTerminal("now");
+		setTimeout(function (){ 
+			write(msgList[msgenum]());
+		}, 300);
 	}
 	setTimeout(function() {
 		display.poke();
@@ -340,14 +344,16 @@ function write(text) {
 			// Clear if all lines filled
 			if ((x === 6) || (abortWrite)) {
 				console.log("clearing terminal");
+				console.log(this);
 				clearInterval(writer);
 				if (abortWrite) {
 					abortWrite = !abortWrite;
 					clearTerminal("now");
-				}
+				}/*
 				else {
 					clearTerminal();
 				}
+				*/
 			}
 
 			// Reset char count
@@ -357,13 +363,14 @@ function write(text) {
 		// Clear interval when all chars printed
 		if (f === text.length) {
 			clearInterval(writer);
-			clearTerminal();
+		//	clearTerminal();
 		}
 	}, 5);
 }
 
 
 function clearTerminal(timing="none") {
+	console.log("in clear terminal");
 	if (timing === "now") {
 		for (let x = 1; x < 6; ++x) {
 			let id = document.getElementById("line" + x);
@@ -380,6 +387,7 @@ function clearTerminal(timing="none") {
 			writing = false;
 		}, 1250);
 	}
+	msgCycler();
 
 
 }

@@ -20,8 +20,7 @@
 	  "access_location"
     ],
     "buildTargets": [
-      "higgs",
-      "meson"
+      "higgs"
     ],
     "i18n": {},
     "defaultLanguage": "en-US"
