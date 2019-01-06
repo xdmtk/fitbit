@@ -36,6 +36,7 @@ var bashStr = "#!/bin/bash";
 var frameNumber = 0;
 var frameString = "";
 var f = true;
+var isDev = false;
 
 // Clock and BG 
 var ticker = false;
@@ -95,6 +96,11 @@ function main() {
 	clock.granularity = 'seconds';
 	clock.ontick = function (evt) {
 		datevar = evt.date;
+		if (isDev) {
+			if (l2.text.length > 17) {
+				l2.text =  "$ time -> " + timeStr();
+			}
+		}
 		if (!ticker) {
 			pulser = setInterval(function() {
 				pulsate();
@@ -155,6 +161,7 @@ function devStatsStr() {
 	let d = "$ date -> " + date;
 	let b = "$ battery -> " + batPercent + "%";
 	let m = "$ memory -> " + mem + "%";
+	isDev = true;
 	return bashStr + " -dev" + t + d + b + m;
 }
 
@@ -165,6 +172,7 @@ function healthStatsStr() {
 	let s = "$ steps ->  " + steps;
 	let h = "$ h. bpm ->  " + hbpm;
 	let e = "$ distance ->  " + dist + " mi";
+	isDev = false;;
 	return bashStr + " -self" + c + s + h + e;
 }
 
@@ -175,6 +183,7 @@ function envStatsStr() {
 	let c = "$ city -> " + city;
 	let co = "$ cur -> " + conditions;
 	let e = "$ altitude -> " + elev + "ft";
+	isDev = false;
 	return bashStr + " -env" + w + c + co + e;
 }
 
