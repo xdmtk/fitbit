@@ -70,7 +70,7 @@ var city;
 var writing = false;
 var abortWrite = false;
 var msgenum = 0;
-
+var writer;
 
 /* 
  *
@@ -114,9 +114,13 @@ function setupEventHandlers() {
 	doc.onmousedown = function () {
 		console.log("mouse press");
 		clearTerminal("now");
+		clearInterval(writer);
+		writer = null;
 		setTimeout(function (){ 
-			write(msgList[msgenum]());
-		}, 300);
+			if (writer === null) {
+				write(msgList[msgenum]());
+			}
+		}, 5);
 	}
 	setTimeout(function() {
 		display.poke();
@@ -311,7 +315,7 @@ function write(text) {
 	let f = 0;
 	let c = 0;
 	var outline = "";
-	let writer = setInterval(function () {
+	writer = setInterval(function () {
 
 		// Set line id
 		let id = document.getElementById("line" + x);
@@ -349,6 +353,7 @@ function write(text) {
 				if (abortWrite) {
 					abortWrite = !abortWrite;
 					clearTerminal("now");
+					return;
 				}/*
 				else {
 					clearTerminal();
