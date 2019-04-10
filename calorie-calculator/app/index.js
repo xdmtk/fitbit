@@ -6,6 +6,8 @@ import * as messaging from "messaging";
 import { today } from "user-activity";
 import { vibration } from "haptics";
 
+const $pushButtons = document.getElementsByClassName('pbtn');
+const $nonPushButtons = document.getElementsByClassName('no-pbtn');
 
 var plusMin;
 var totalCals;
@@ -23,10 +25,28 @@ function main() {
 		datevar = evt.date;
 	//	setDateStr();
 	}
-
+    setupEvents();
 //	loadCaloricData();
 	
 }
+
+
+function setupEvents() {
+    
+    $pushButtons.onactivate = function () { vibrateBump(); }
+
+
+
+
+}
+
+function vibrateBump() {
+    vibration.start('bump');
+    setTimeout(function () {
+        vibration.stop();
+    }, 100);
+}
+
 
 /* Main Calorie Load */
 
