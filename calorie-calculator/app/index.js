@@ -32,11 +32,21 @@ function main() {
 function setupEvents() {
     
     for (let i = 0; i < $pushButtons.length; ++i) {
-        $pushButtons[i].onactivate = function (evt) { 
+        $pushButtons[i].onactivate = function(evt) { 
             addSubtractCals($pushButtons[i].text);
             vibrateBump(); 
         }
     }
+
+    $plusMinus.onactivate = function(evt) {
+         if ($plusMinus.text === '+') {
+             $plusMinus.text = '-';
+         }
+         else {
+             $plusMinus.text = '+';
+         }
+    }
+
 
 
 
@@ -68,7 +78,7 @@ function loadCaloricData() {
 		totalCals = parseInt(dataFields[0]);
 		inputDate = dataFields[1];
 		
-		if (inputDate !== getDateStr() || totalCals > 9999) {
+		if (inputDate !== getDateStr()) {
 			let ascii_data = "0," + getDateStr();
 			fs.writeFileSync("cd.txt", ascii_data, "ascii");
 			totalCals = 0;
