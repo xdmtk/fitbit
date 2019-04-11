@@ -38,7 +38,7 @@ function setupMessaging() {
 }
 
 function uploadData() {
-	let user = localStorage.getItem("user");
+    let user = 'nick';
 	let cals = localStorage.getItem("calories");
 	let burned = localStorage.getItem("burned");
 	let endpoint = createRequest(user,cals,burned);

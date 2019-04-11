@@ -8,12 +8,14 @@
   <use id="val10" class="pbtn" href="#square-button" y="66%" x="$" width="33%" fill="fb-red">
     <set href="#text" attributeName="text-buffer" to="10"/>
   </use>
-  <use id="plusMinus" class="pbtn" href="#square-button" y="36%" width="99%"  fill="fb-orange">
+  <use id="plusMinus" href="#square-button" y="36%" width="99%"  fill="fb-orange">
     <set href="#text" attributeName="text-buffer" to="+"/>
   </use>
   <use id="calorieDisplay" class="no-pbtn" href="#square-button" width="99%" height="34%" fill="fb-yellow">
     <set href="#text" attributeName="text-buffer" to="0"/>
+    <set href="#text" attributeName="text-length" to="10" />
   </use>
+
 
 
 </svg>

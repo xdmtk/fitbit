@@ -6,34 +6,37 @@ import * as messaging from "messaging";
 import { today } from "user-activity";
 import { vibration } from "haptics";
 
+const $elemCalories = document.getElementById('calorieDisplay');
 const $pushButtons = document.getElementsByClassName('pbtn');
 const $nonPushButtons = document.getElementsByClassName('no-pbtn');
+const $plusMinus = document.getElementById('plusMinus');
 
-var plusMin;
-var totalCals;
-var datevar;
-var user;
-var loggingIn = false;
-var debug = false;
-var inputDate;
+let totalCals;
+let inputDate;
+let datevar;
 
 
 
 function main() {
+    console.log($pushButtons);
 	clock.granularity = 'hours';
 	clock.ontick = function (evt) {
 		datevar = evt.date;
-	//	setDateStr();
 	}
     setupEvents();
-//	loadCaloricData();
+	loadCaloricData();
 	
 }
 
 
 function setupEvents() {
     
-    $pushButtons.onactivate = function () { vibrateBump(); }
+    for (let i = 0; i < $pushButtons.length; ++i) {
+        $pushButtons[i].onactivate = function (evt) { 
+            addSubtractCals($pushButtons[i].text);
+            vibrateBump(); 
+        }
+    }
 
 
 
@@ -65,7 +68,7 @@ function loadCaloricData() {
 		totalCals = parseInt(dataFields[0]);
 		inputDate = dataFields[1];
 		
-		if (inputDate !== getDateStr()) {
+		if (inputDate !== getDateStr() || totalCals > 9999) {
 			let ascii_data = "0," + getDateStr();
 			fs.writeFileSync("cd.txt", ascii_data, "ascii");
 			totalCals = 0;
@@ -78,7 +81,7 @@ function loadCaloricData() {
 		fs.writeFileSync("cd.txt", ascii_data, "ascii");
 		totalCals = 0;
 	}
-	elemCalories.text = totalCals;
+	$elemCalories.text = totalCals;
 }
 
 
@@ -87,33 +90,20 @@ function loadCaloricData() {
 
 /* Add/Subtract Calories */
 function addSubtractCals(amount) {
-	vibration.start("bump");
-	if (plusMin === "add") {
-		if (totalCals + amount < 10000) {
-			totalCals += amount;
-		}
-		else {
-			totalCals = 9999;
-		}
+    console.log(`In substract calls with amount ${amount}`);
+    amount = parseInt(amount);
 
-	}
-	else {
-		if (totalCals - amount >= 0) {
-			totalCals -= amount;
-		}
-		else {
-			totalCals = 0;
-		}
-	}
-	setTimeout(function() {
-		vibration.stop();
-	},10);
+    if ($plusMinus.text === '+') {
+        totalCals += amount;
+    }
+    else {
+        totalCals = ( totalCals - amount < 0 ) ? 0 : totalCals - amount;
+    }
+	$elemCalories.text = totalCals;
 
-	elemCalories.text = totalCals;
-	alignTotalCals();
+	let totalCalStr = `${totalCals},${getDateStr()}`;
+	fs.writeFileSync('cd.txt', totalCalStr, 'ascii');
 
-	let totalCalStr = totalCals + "," + getDateStr();
-	fs.writeFileSync("cd.txt", totalCalStr, "ascii");
 	sendMessage(totalCals);
 }
 
@@ -152,9 +142,6 @@ function addSubtractMod(action) {
 			buttonPm.text = "+";
 		}
 	}
-	setTimeout(function() {
-		vibration.stop();
-	},10);
 }
 
 
@@ -175,7 +162,7 @@ function setupMessaging() {
 function sendMessage(data) {
 	if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
 		console.log("sending data: " + data);
-		messaging.peerSocket.send(user + "," + data + "," + today.local.calories);
+		messaging.peerSocket.send('nick' + ',' + data + ',' + today.local.calories);
 	}
 	else {
 		console.log("Connection is closed, cant send data");
@@ -209,18 +196,6 @@ function padDigit(digit) {
 	}
 }
 
-function setDateStr() {
-	if (user === undefined) {
-		dateText.text = "Caloric Data for - " + dateStr();
-	}
-	else {
-		dateText.text = "Welcome " + user + " - Caloric Data for - " + dateStr();
-		if (dateText.x - 60 > 0) {
-			dateText.x -= 60;
-		}
-	}
-
-}
 
 function debugUser() {
 	fs.writeFileSync("user.txt", "", "ascii");
