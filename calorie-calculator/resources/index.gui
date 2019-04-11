@@ -1,52 +1,21 @@
 <svg>
+  <use id="val100" class="pbtn" href="#square-button" y="66%" width="33%" fill="fb-red">
+    <set href="#text" attributeName="text-buffer" to="100"/>
+  </use>
+  <use id="val50" class="pbtn" href="#square-button" y="66%" x="$" width="33%" fill="fb-red">
+    <set href="#text" attributeName="text-buffer" to="50"/>
+  </use>
+  <use id="val10" class="pbtn" href="#square-button" y="66%" x="$" width="33%" fill="fb-red">
+    <set href="#text" attributeName="text-buffer" to="10"/>
+  </use>
+  <use id="plusMinus" href="#square-button" y="36%" width="99%"  fill="fb-orange">
+    <set href="#text" attributeName="text-buffer" to="+"/>
+  </use>
+  <use id="calorieDisplay" class="no-pbtn" href="#square-button" width="99%" height="34%" fill="fb-yellow">
+    <set href="#text" attributeName="text-buffer" to="0"/>
+    <set href="#text" attributeName="text-length" to="10" />
+  </use>
 
 
 
-	<rect id="main-screen" class="background" />
-
-	<text id="date-title" text-length="96" x="65" y="20" font-size="18" fill="white"></text>
-	<line x1="0" x2="348" y1="28" y2="28" fill="#37c857" />
-
-	<!-- Main calorie display -->
-	<rect class="recbord" width="57%" height="38%" x="29" y="47" />
-	<rect class="recfill" width="55%" height="36%" x="33" y="50" />
-	<text id="total-cals" x="59" y="115" >2777</text>
-
-
-	<!-- Plus / Minus button -->
-	<rect id="plus-buttonb" pointer-events="visible"  class="recbord" width="80" height="70" x="240" y="61" fill="#9f37c8" />
-	<rect id="plus-buttonf" pointer-events="visible" class="recfill" width="76" height="66" x="242" y="64" />
-	<text id="plus-button" pointer-events="visible" x="261" y="114">+</text>
-
-
-	<!-- Three calorie value buttons -->
-	<rect id="hundredb" class="recbord" width="90" height="70" x="29" y="162" fill="#37a9c8" />
-	<rect id="hundredf" class="recfill" width="86" height="66" x="31" y="164" />
-	<text id="hundred" class="buttons" x="41" y="210">100</text>
-
-	<rect id="fiftyb" class="recbord" width="90" height="70" x="130" y="162" fill="#37a9c8" />
-	<rect id="fiftyf" class="recfill" width="86" height="66" x="132" y="164" />
-	<text id="fifty" class="buttons" x="152" y="210">50</text>
-
-	<rect id="tenb" class="recbord" width="90" height="70" x="231" y="162" fill="#37a9c8" />
-	<rect id="tenf" class="recfill" width="86" height="66" x="233" y="164" />
-	<text id="ten" class="buttons" x="253" y="210">10</text>
-
-
-
-	<!-- Login Form -->
-	<rect id="login-bg" class="login" />
-
-	<text id="login-welcome" class="login" text-length="96" x="127" y="20" font-size="18" fill="white">Please Login</text>
-	<line class="login" x1="0" x2="348" y1="28" y2="28" fill="#37c857" />
-
-	<rect class="login" id="click-area-xenia" opacity="0" y="0" x="0" width="348" height="125" />
-	<rect id="xenia-login-button" class="recbord login" width="57%" height="28%" x="74" y="57" />
-	<rect id="xenia-login-buttonf" class="recfill login" width="55%" height="26%" x="78" y="60" />
-	<text class="login" id="name-user-xenia" x="112" y="110" >Xenia</text>
-	
-	<rect class="login" id="click-area-nick" opacity="0" y="125" x="0" width="348" height="125" />
-	<rect id="nick-login-button" class="recbord login" width="57%" height="28%" x="74" y="147" />
-	<rect id="nick-login-buttonf" class="recfill login" width="55%" height="26%" x="78" y="150" />
-	<text class="login" id="name-user-nick" x="118" y="200" >Nick</text>
 </svg>
