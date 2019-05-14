@@ -7,14 +7,18 @@ import { today } from "user-activity";
 import { vibration } from "haptics";
 
 const $elemCalories = document.getElementById('calorieDisplay');
+const $elemWeight = document.getElementById('weightDisplay');
 const $pushButtons = document.getElementsByClassName('pbtn');
+const $pushButtonsWeight = document.getElementsByClassName('pbtn-weight');
 const $nonPushButtons = document.getElementsByClassName('no-pbtn');
-const $plusMinus = document.getElementById('plusMinus');
+const $plusMinusCalDisplay = document.getElementById('calorieDisplay');
 
 let totalCals;
+let totalWeight;
 let inputDate;
 let datevar;
-
+let plusMin = '+';
+let plusMinWeight = '+';
 
 
 function main() {
@@ -25,6 +29,8 @@ function main() {
 	}
     setupEvents();
 	loadCaloricData();
+	loadWeightData();
+
 	
 }
 
@@ -37,16 +43,33 @@ function setupEvents() {
             vibrateBump(); 
         }
     }
-
-    $plusMinus.onactivate = function(evt) {
-         if ($plusMinus.text === '+') {
-             $plusMinus.text = '-';
-         }
-         else {
-             $plusMinus.text = '+';
-         }
+    for (let i = 0; i < $pushButtonsWeight.length; ++i) {
+        $pushButtonsWeight[i].onactivate = function(evt) { 
+            addSubtractWeight($pushButtonsWeight[i].text);
+            vibrateBump(); 
+        }
     }
 
+    $plusMinusCalDisplay.onactivate = function(evt) {
+        if (plusMin === '+') {
+            $plusMinusCalDisplay.text = '- ' + $plusMinusCalDisplay.text.split(' ')[1];
+            plusMin = '-';
+        }
+        else {
+            $plusMinusCalDisplay.text = '+ ' + $plusMinusCalDisplay.text.split(' ')[1];
+            plusMin = '+';
+        }
+    }
+    $elemWeight.onactivate = function(evt) {
+        if (plusMin === '+') {
+            $elemWeight.text = '- ' + $elemWeight.text.split(' ')[1];
+            plusMinWeight = '-';
+        }
+        else {
+            $elemWeight.text = '+ ' + $elemWeight.text.split(' ')[1];
+            plusMinWeight = '+';
+        }
+    }
 
 
 
@@ -91,11 +114,54 @@ function loadCaloricData() {
 		fs.writeFileSync("cd.txt", ascii_data, "ascii");
 		totalCals = 0;
 	}
-	$elemCalories.text = totalCals;
+	$elemCalories.text = plusMin + ' ' + totalCals;
 }
 
 
+/* Main Weight Load */
 
+function loadWeightData() {
+    let data;
+    try {
+        data = fs.readFileSync("wd.txt", "ascii");
+    }
+    catch {
+        fs.writeFileSync('wd.txt', '', 'ascii');
+    }
+	let dataFields = data.split(",");
+
+	if (dataFields.length > 1) {
+		console.log("Read data: " + data);
+		totalWeight = parseFloat(dataFields[0]);
+		inputDate = dataFields[1];
+
+	}
+	else {
+		let ascii_data = "0," + getDateStr();
+		fs.writeFileSync("wd.txt", ascii_data, "ascii");
+		totalWeight = 0;
+	}
+	$elemWeight.text = plusMinWeight + ' ' + totalWeight;
+}
+
+
+/* Add/Subtract Weight */
+function addSubtractWeight(amount) {
+    console.log(`In substract calls with amount ${amount}`);
+    amount = parseFloat(amount);
+
+    if (plusMinWeight === '+') {
+        totalWeight += amount;
+    }
+    else {
+        totalCals = ( totalWeight - amount < 0 ) ? 0 : totalWeight - amount;
+    }
+	$elemWeight.text = plusMinWeight + ' ' + totalWeight;
+
+	let totalWeightStr = `${totalWeight},${getDateStr()}`;
+	fs.writeFileSync('wd.txt', totalWeightStr, 'ascii');
+
+}
 
 
 /* Add/Subtract Calories */
@@ -103,13 +169,13 @@ function addSubtractCals(amount) {
     console.log(`In substract calls with amount ${amount}`);
     amount = parseInt(amount);
 
-    if ($plusMinus.text === '+') {
+    if (plusMin === '+') {
         totalCals += amount;
     }
     else {
         totalCals = ( totalCals - amount < 0 ) ? 0 : totalCals - amount;
     }
-	$elemCalories.text = totalCals;
+	$elemCalories.text = plusMin + ' ' + totalCals;
 
 	let totalCalStr = `${totalCals},${getDateStr()}`;
 	fs.writeFileSync('cd.txt', totalCalStr, 'ascii');
@@ -169,10 +235,10 @@ function setupMessaging() {
 	}
 }
 
-function sendMessage(data) {
+function sendMessage(data, weight) {
 	if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
 		console.log("sending data: " + data);
-		messaging.peerSocket.send('nick' + ',' + data + ',' + today.local.calories);
+		messaging.peerSocket.send('nick' + ',' + data + ',' + today.local.calories, weight);
 	}
 	else {
 		console.log("Connection is closed, cant send data");
