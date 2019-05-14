@@ -2,23 +2,25 @@
     <use id="container" href="#panoramaview">
         <use id="item1" href="#panoramaview-item">
             
-            <use id="val100" class="pbtn" href="#square-button" y="66%" width="33%" fill="fb-red">
+            <use id="val100" class="pbtn" href="#square-button" y="55%" width="33%" fill="fb-red">
                 <set id="a" href="#text" attributeName="text-buffer" to="100"/>
             </use>
 
-            <use id="val50" class="pbtn" href="#square-button" y="66%" x="$" width="33%" fill="fb-red">
+            <use id="val50" class="pbtn" href="#square-button" y="55%" x="$" width="33%" fill="fb-red">
                 <set id="b" href="#text" attributeName="text-buffer" to="50"/>
             </use>
 
-            <use id="val10" class="pbtn" href="#square-button" y="66%" x="$" width="33%" fill="fb-red">
+            <use id="val10" class="pbtn" href="#square-button" y="55%" x="$" width="33%" fill="fb-red">
                 <set id="c" href="#text" attributeName="text-buffer" to="10"/>
             </use>
 
+<!--
             <use id="plusMinus" href="#square-button" y="36%" width="99%"  fill="fb-orange">
                 <set id="d" href="#text" attributeName="text-buffer" to="+"/>
             </use>
+-->
 
-            <use id="calorieDisplay" class="no-pbtn" href="#square-button" width="99%" height="34%" fill="fb-yellow">
+            <use id="calorieDisplay" class="no-pbtn" href="#square-button" y="40" width="99%" height="34%" fill="fb-yellow">
                 <set id="e" href="#text" attributeName="text-buffer" to="0"/>
                 <set id="f" href="#text" attributeName="text-length" to="10" />
             </use>

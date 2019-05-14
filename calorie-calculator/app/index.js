@@ -9,12 +9,12 @@ import { vibration } from "haptics";
 const $elemCalories = document.getElementById('calorieDisplay');
 const $pushButtons = document.getElementsByClassName('pbtn');
 const $nonPushButtons = document.getElementsByClassName('no-pbtn');
-const $plusMinus = document.getElementById('plusMinus');
+const $plusMinusCalDisplay = document.getElementById('calorieDisplay');
 
 let totalCals;
 let inputDate;
 let datevar;
-
+let plusMin = '+';
 
 
 function main() {
@@ -38,15 +38,16 @@ function setupEvents() {
         }
     }
 
-    $plusMinus.onactivate = function(evt) {
-         if ($plusMinus.text === '+') {
-             $plusMinus.text = '-';
-         }
-         else {
-             $plusMinus.text = '+';
-         }
+    $plusMinusCalDisplay.onactivate = function(evt) {
+        if (plusMin === '+') {
+            $plusMinusCalDisplay.text = '- ' + $plusMinusCalDisplay.text.split(' ')[1];
+            plusMin = '-';
+        }
+        else {
+            $plusMinusCalDisplay.text = '+ ' + $plusMinusCalDisplay.text.split(' ')[1];
+            plusMin = '+';
+        }
     }
-
 
 
 
@@ -103,7 +104,7 @@ function addSubtractCals(amount) {
     console.log(`In substract calls with amount ${amount}`);
     amount = parseInt(amount);
 
-    if ($plusMinus.text === '+') {
+    if (plusMin === '+') {
         totalCals += amount;
     }
     else {
