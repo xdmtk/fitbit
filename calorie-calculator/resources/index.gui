@@ -44,7 +44,7 @@
                 <set id="f" href="#text" attributeName="text-length" to="10" />
             </use>
 
-            <text x="37%" y="95%" font-size="24" fill="white">Calories</text>
+            <text x="37%" y="95%" font-size="24" fill="white">Weight</text>
 
 
 
