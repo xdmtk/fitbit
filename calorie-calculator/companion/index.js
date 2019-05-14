@@ -28,11 +28,11 @@ function setupMessaging() {
 			localStorage.setItem("user", userArr[0]);
 			localStorage.setItem("calories", userArr[1]);
 			localStorage.setItem("burned", userArr[2]);
+			localStorage.setItem("weight", userArr[3]);
 			console.log("incoming message with data: " +
 				userArr[1] +  " : " + userArr[2] + 
 				" : " + userArr[0] + "\nsetting local storage");
 
-			
 			uploadData();
 	}
 }
