@@ -41,7 +41,8 @@ function uploadData() {
     let user = 'nick';
 	let cals = localStorage.getItem("calories");
 	let burned = localStorage.getItem("burned");
-	let endpoint = createRequest(user,cals,burned);
+	let weight = localStorage.getItem("weight");
+	let endpoint = createRequest(user,cals,burned,weight);
 	console.log("fetching endpoint: " + endpoint);
 	fetch(endpoint)
 	.then(function(response) {

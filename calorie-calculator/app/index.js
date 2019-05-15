@@ -161,6 +161,7 @@ function addSubtractWeight(amount) {
 	let totalWeightStr = `${totalWeight},${getDateStr()}`;
 	fs.writeFileSync('wd.txt', totalWeightStr, 'ascii');
 
+	sendMessage(totalCals, totalWeight);
 }
 
 
@@ -180,7 +181,7 @@ function addSubtractCals(amount) {
 	let totalCalStr = `${totalCals},${getDateStr()}`;
 	fs.writeFileSync('cd.txt', totalCalStr, 'ascii');
 
-	sendMessage(totalCals);
+	sendMessage(totalCals, totalWeight);
 }
 
 
@@ -238,7 +239,7 @@ function setupMessaging() {
 function sendMessage(data, weight) {
 	if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
 		console.log("sending data: " + data);
-		messaging.peerSocket.send('nick' + ',' + data + ',' + today.local.calories, weight);
+		messaging.peerSocket.send('nick' + ',' + data + ',' + today.local.calories + ',' + weight);
 	}
 	else {
 		console.log("Connection is closed, cant send data");
