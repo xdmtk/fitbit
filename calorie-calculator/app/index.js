@@ -14,7 +14,7 @@ const $nonPushButtons = document.getElementsByClassName('no-pbtn');
 const $plusMinusCalDisplay = document.getElementById('calorieDisplay');
 
 let totalCals;
-let totalWeight;
+let totalWeight = 0;
 let inputDate;
 let datevar;
 let plusMin = '+';
@@ -61,7 +61,7 @@ function setupEvents() {
         }
     }
     $elemWeight.onactivate = function(evt) {
-        if (plusMin === '+') {
+        if (plusMinWeight === '+') {
             $elemWeight.text = '- ' + $elemWeight.text.split(' ')[1];
             plusMinWeight = '-';
         }
@@ -139,24 +139,24 @@ function loadWeightData() {
 	else {
 		let ascii_data = "0," + getDateStr();
 		fs.writeFileSync("wd.txt", ascii_data, "ascii");
-		totalWeight = 0;
+		totalWeight = 190;
 	}
-	$elemWeight.text = plusMinWeight + ' ' + totalWeight;
+	$elemWeight.text = plusMinWeight + ' ' + totalWeight.toFixed(2);
 }
 
 
 /* Add/Subtract Weight */
 function addSubtractWeight(amount) {
-    console.log(`In substract calls with amount ${amount}`);
+    console.log(`In substract calls with amount ${amount} with totalweight ${totalWeight}`);
     amount = parseFloat(amount);
 
     if (plusMinWeight === '+') {
         totalWeight += amount;
     }
     else {
-        totalCals = ( totalWeight - amount < 0 ) ? 0 : totalWeight - amount;
+        totalWeight = ( totalWeight - amount < 0 ) ? 0 : totalWeight - amount;
     }
-	$elemWeight.text = plusMinWeight + ' ' + totalWeight;
+	$elemWeight.text = plusMinWeight + ' ' + totalWeight.toFixed(2);
 
 	let totalWeightStr = `${totalWeight},${getDateStr()}`;
 	fs.writeFileSync('wd.txt', totalWeightStr, 'ascii');
