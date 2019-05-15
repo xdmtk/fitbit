@@ -5,7 +5,6 @@ import { geolocation } from "geolocation";
 var latitude;
 var longitude;
 var ENDPOINT;
-var API_KEY = "2e5f8a30167b5b71a8792cc9e09f94bc";
 
 function queryOpenWeather() {
 	console.log("in query open weather");
