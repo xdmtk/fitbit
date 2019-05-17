@@ -5,6 +5,10 @@ import clock from "clock";
 import * as messaging from "messaging";
 import { today } from "user-activity";
 import { vibration } from "haptics";
+import { me as device } from "device";
+import { user } from "user-profile";
+
+
 
 const $elemCalories = document.getElementById('calorieDisplay');
 const $elemWeight = document.getElementById('weightDisplay');
@@ -22,7 +26,6 @@ let plusMinWeight = '+';
 
 
 function main() {
-    console.log($pushButtons);
 	clock.granularity = 'hours';
 	clock.ontick = function (evt) {
 		datevar = evt.date;
