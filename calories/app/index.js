@@ -99,6 +99,9 @@ function loadCaloricData() {
 	if (dataFields.length > 1) {
 		console.log("Read data: " + data);
 		totalCals = parseInt(dataFields[0]);
+        if (isNaN(totalCals)) {
+            totalCals = 0;
+        }
 		inputDate = dataFields[1];
 		
 		if (inputDate !== getDateStr()) {
@@ -133,6 +136,9 @@ function loadWeightData() {
 	if (dataFields.length > 1) {
 		console.log("Read data: " + data);
 		totalWeight = parseFloat(dataFields[0]);
+        if (isNaN(totalWeight)) {
+            totalWeight = 190;
+        }
 		inputDate = dataFields[1];
 
 	}
