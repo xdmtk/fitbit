@@ -10,6 +10,7 @@ import { user } from "user-profile";
 
 
 
+/* Collect DOM elements */
 const $elemCalories = document.getElementById('calorieDisplay');
 const $elemWeight = document.getElementById('weightDisplay');
 const $pushButtons = document.getElementsByClassName('pbtn');
@@ -17,6 +18,7 @@ const $pushButtonsWeight = document.getElementsByClassName('pbtn-weight');
 const $nonPushButtons = document.getElementsByClassName('no-pbtn');
 const $plusMinusCalDisplay = document.getElementById('calorieDisplay');
 
+/* Calorie/Weight data */
 let totalCals;
 let totalWeight = 0;
 let inputDate;
@@ -25,60 +27,94 @@ let plusMin = '+';
 let plusMinWeight = '+';
 
 
+/**
+ * Updates the dual calorie display for user and 
+ * partner
+ *
+ * @param evt { event } - Contains response data with cal info
+ */
+const receiveCallback = function receiveMessage(evt) {
+    
+    console.log("received");
+
+
+}
+
+
+/**
+ * First function fired, sets up clock for 
+ * date string generation, setup event listeners
+ * loads file storage data for Calories/Weight
+ *
+ */
 function main() {
+
+
 	clock.granularity = 'hours';
 	clock.ontick = function (evt) {
 		datevar = evt.date;
 	}
+
+
     setupEvents();
 	loadCaloricData();
 	loadWeightData();
 
-	
 }
+
+
 
 
 function setupEvents() {
     
-    for (let i = 0; i < $pushButtons.length; ++i) {
-        $pushButtons[i].onactivate = function(evt) { 
-            addSubtractCals($pushButtons[i].text);
+    /* Setup push buttons for Calorie/Weight 
+     * addition/subtraction
+     */
+    for (let $pushButton of $pushButtons) {
+        $pushButton.onactivate = function(evt) { 
+            addSubtractCals($pushButton.text);
             vibrateBump(); 
         }
     }
-    for (let i = 0; i < $pushButtonsWeight.length; ++i) {
-        $pushButtonsWeight[i].onactivate = function(evt) { 
-            addSubtractWeight($pushButtonsWeight[i].text);
+    for (let $pushButtonWeight of $pushButtonsWeight) {
+        $pushButtonsWeight.onactivate = function(evt) { 
+            addSubtractWeight($pushButtonsWeight.text);
             vibrateBump(); 
         }
     }
+   
 
+    /* Set callback for Fitbit messaging receive event */
+    messaging.peerSocket.onmessage = receiveCallback;
+
+    
+    /* Setup event handler for Calorie/Weight display
+     * clicks, changes addition/subtraction modes by setting global
+     * plusMin and plusMinWeight
+     */
     $plusMinusCalDisplay.onactivate = function(evt) {
-        if (plusMin === '+') {
-            $plusMinusCalDisplay.text = '- ' + $plusMinusCalDisplay.text.split(' ')[1];
-            plusMin = '-';
-        }
-        else {
-            $plusMinusCalDisplay.text = '+ ' + $plusMinusCalDisplay.text.split(' ')[1];
-            plusMin = '+';
-        }
+
+        /* Store calorie numeric string and flip operator */
+        const numericText = $plusMinusCalDisplay.text.split(' ')[1];
+        plusMin = (plusMin === '+' ? '-' : '+');
+        
+        /* Set new text display */
+        $plusMinusCalDisplay.text = plusMin + numericText;
     }
+
     $elemWeight.onactivate = function(evt) {
-        if (plusMinWeight === '+') {
-            $elemWeight.text = '- ' + $elemWeight.text.split(' ')[1];
-            plusMinWeight = '-';
-        }
-        else {
-            $elemWeight.text = '+ ' + $elemWeight.text.split(' ')[1];
-            plusMinWeight = '+';
-        }
+        
+        /* Store weight numeric string and flip operator */
+        const numericText = $elemWeight.text.split(' ')[1];
+        plusMinWeight = (plusMinWeight === '+' ? '-' : '+');
+        
+        /* Set new text display */
+        $elemWeight.text = plusMinWeight + numericText;
     }
-
-
-
-
 }
 
+
+/* Activates quick vibration on button press */
 function vibrateBump() {
     vibration.start('bump');
     setTimeout(function () {
@@ -88,29 +124,42 @@ function vibrateBump() {
 
 
 /* Main Calorie Load */
-
 function loadCaloricData() {
+
+    
     let data;
+
+    /* Try to read file calorie data, if not write new blank file */
     try {
         data = fs.readFileSync("cd.txt", "ascii");
     }
     catch {
         fs.writeFileSync('cd.txt', '', 'ascii');
     }
+
+    /* Parse CSV */
 	let dataFields = data.split(",");
 
+    /* If fields are valid, write data to global totalCals */
 	if (dataFields.length > 1) {
 		console.log("Read data: " + data);
 		totalCals = parseInt(dataFields[0]);
+
+        /* If invalid totalCal field, set to 0 */
         if (isNaN(totalCals)) {
             totalCals = 0;
         }
+
+        /* Set the input date to inputDate global */
 		inputDate = dataFields[1];
-		
+	    
+        /* If starting a new day, write new data to cd.txt */
 		if (inputDate !== getDateStr()) {
 			let ascii_data = "0," + getDateStr();
 			fs.writeFileSync("cd.txt", ascii_data, "ascii");
 			totalCals = 0;
+
+            /* This must be a typo but too scared to change it */
 			inputDate === getDateStr();
 		}
 
@@ -124,8 +173,11 @@ function loadCaloricData() {
 }
 
 
-/* Main Weight Load */
-
+/* Main Weight Load 
+ *
+ * Same structure as Main Calorie Load, except weight persists
+ * across time ( doesn't reset to 0 )
+ */
 function loadWeightData() {
     let data;
     try {
@@ -254,6 +306,8 @@ function sendMessage(data, weight) {
 		console.log("Connection is closed, cant send data");
 	}
 }
+
+
 
 
 

@@ -46,7 +46,16 @@ function uploadData() {
 	console.log("fetching endpoint: " + endpoint);
 	fetch(endpoint)
 	.then(function(response) {
-		console.log("success fetch" + response) ;
+        response.json().then(function (t) {
+            /*
+            console.log("You calories: " + t[0][0]['calories']);
+            console.log("Other calories: " + t[1][0]['calories']);
+            */
+
+            localStorage.setItem("calYou", t[0][0]['calories']);
+            localStorage.setItem("calOther", t[1][0]['calories']);
+
+        });
 	})
 	.catch(function(error) {
 		console.log("error fetch" + error) ;
