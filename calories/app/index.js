@@ -18,6 +18,8 @@ const $nonPushButtons = document.getElementsByClassName('no-pbtn');
 const $plusMinusCalDisplay = document.getElementById('calorieDisplay');
 const $youCalDisplay = document.getElementById('yourCalDisplay');
 const $otherCalDisplay = document.getElementById('otherCalDisplay');
+const $youBurnedDisplay = document.getElementById('yourBurnedDisplay');
+const $otherBurnedDisplay = document.getElementById('otherBurnedDisplay');
 /* Calorie/Weight data */
 let totalCals;
 let totalWeight = 0;
@@ -40,6 +42,8 @@ const receiveCallback = function receiveMessage(evt) {
    	const youCal = entryData[0];
 	const otherCal = entryData[1];
 	const otherDate = entryData[2].split(' ')[0];
+	const youBurned = entryData[3];
+	const otherBurned = entryData[4];
 	let d = new Date();
 	const dParsed  = d.getFullYear() + "-" +
 		((d.getMonth()+1) < 10 ? "0" + (d.getMonth()+1) : (d.getMonth()+1))
@@ -48,6 +52,9 @@ const receiveCallback = function receiveMessage(evt) {
 
 	$youCalDisplay.text = youCal;
 	$otherCalDisplay.text = otherCal;
+	$youBurnedDisplay.text = youBurned;
+	$otherBurnedDisplay.text = otherBurned;
+
 	if (Date.parse(otherDate) !== Date.parse(dParsed)) {
 		console.log(Date.parse(otherDate));
 		console.log(Date.parse(dParsed));
