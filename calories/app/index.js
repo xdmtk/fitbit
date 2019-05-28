@@ -16,7 +16,8 @@ const $pushButtons = document.getElementsByClassName('pbtn');
 const $pushButtonsWeight = document.getElementsByClassName('pbtn-weight');
 const $nonPushButtons = document.getElementsByClassName('no-pbtn');
 const $plusMinusCalDisplay = document.getElementById('calorieDisplay');
-
+const $youCalDisplay = document.getElementById('yourCalDisplay');
+const $otherCalDisplay = document.getElementById('otherCalDisplay');
 /* Calorie/Weight data */
 let totalCals;
 let totalWeight = 0;
@@ -34,8 +35,9 @@ let plusMinWeight = '+';
  */
 const receiveCallback = function receiveMessage(evt) {
     
-    console.log("received");
-
+    console.log("received" + evt.data);
+   	$youCalDisplay.text = evt.data.split(",")[0];
+	$otherCalDisplay.text = evt.data.split(",")[1];
 
 }
 
