@@ -36,10 +36,20 @@ let plusMinWeight = '+';
 const receiveCallback = function receiveMessage(evt) {
     
     console.log("received" + evt.data);
-   	$youCalDisplay.text = evt.data.split(",")[0];
-	$otherCalDisplay.text = evt.data.split(",")[1];
+   	const entryData = evt.data.split(",");
+   	const youCal = entryData[0];
+	const otherCal = entryData[1];
+	const otherDate = entryData[2].split(' ')[0];
+	let d = new Date();
+	const dParsed  = Date.parse(d.toLocaleString().split(',')[0]);
 
-}
+	$youCalDisplay.text = youCal;
+	$otherCalDisplay.text = otherCal;
+	if (Date.parse(otherDate) !== dParsed) {
+		$otherCalDisplay.text = "0";
+	}
+
+};
 
 
 /**
