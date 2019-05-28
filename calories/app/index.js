@@ -41,11 +41,18 @@ const receiveCallback = function receiveMessage(evt) {
 	const otherCal = entryData[1];
 	const otherDate = entryData[2].split(' ')[0];
 	let d = new Date();
-	const dParsed  = Date.parse(d.toLocaleString().split(',')[0]);
+	const dParsed  = d.getFullYear() + "-" +
+		((d.getMonth()+1) < 10 ? "0" + (d.getMonth()+1) : (d.getMonth()+1))
+		+ "-" + d.getDate();
+
 
 	$youCalDisplay.text = youCal;
 	$otherCalDisplay.text = otherCal;
-	if (Date.parse(otherDate) !== dParsed) {
+	if (Date.parse(otherDate) !== Date.parse(dParsed)) {
+		console.log(Date.parse(otherDate));
+		console.log(Date.parse(dParsed));
+		console.log(otherDate);
+		console.log(dParsed);
 		$otherCalDisplay.text = "0";
 	}
 
