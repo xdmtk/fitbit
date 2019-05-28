@@ -309,6 +309,7 @@ function addSubtractMod(action) {
 function setupMessaging() {
 	messaging.peerSocket.onopen = function() {
 		console.log("Companion connection established, ready to send msg");
+		sendMessage(totalCals,totalWeight)
 	}
 	messaging.peerSocket.onerror = function(err) {
 		console.log("Connection error: " + err.code + " - " + err.message);
