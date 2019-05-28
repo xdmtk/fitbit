@@ -5,7 +5,6 @@ import clock from "clock";
 import * as messaging from "messaging";
 import { today } from "user-activity";
 import { vibration } from "haptics";
-import { me as device } from "device";
 import { user } from "user-profile";
 
 
@@ -57,6 +56,7 @@ function main() {
 
 
     setupEvents();
+	setupMessaging();
 	loadCaloricData();
 	loadWeightData();
 
@@ -77,8 +77,8 @@ function setupEvents() {
         }
     }
     for (let $pushButtonWeight of $pushButtonsWeight) {
-        $pushButtonsWeight.onactivate = function(evt) { 
-            addSubtractWeight($pushButtonsWeight.text);
+        $pushButtonWeight.onactivate = function(evt) {
+            addSubtractWeight($pushButtonWeight.text);
             vibrateBump(); 
         }
     }
