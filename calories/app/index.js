@@ -118,7 +118,7 @@ function setupEvents() {
         plusMin = (plusMin === '+' ? '-' : '+');
         
         /* Set new text display */
-        $plusMinusCalDisplay.text = plusMin + numericText;
+        $plusMinusCalDisplay.text = plusMin + " " + numericText;
     }
 
     $elemWeight.onactivate = function(evt) {
@@ -128,7 +128,7 @@ function setupEvents() {
         plusMinWeight = (plusMinWeight === '+' ? '-' : '+');
         
         /* Set new text display */
-        $elemWeight.text = plusMinWeight + numericText;
+        $elemWeight.text = plusMinWeight + " " + numericText;
     }
 }
 
