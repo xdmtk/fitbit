@@ -52,7 +52,7 @@ function uploadData() {
             localStorage.setItem("calYou", t[0][0]['calories']);
             localStorage.setItem("calOther", t[1][0]['calories']);
 
-			messaging.peerSocket.send(t[0][0] + "," + t[1][0]);
+			messaging.peerSocket.send(t[0][0]['calories']+ "," + t[1][0]['calories']);
 			console.log("sent data back to device");
 
 
