@@ -47,7 +47,8 @@ const receiveCallback = function receiveMessage(evt) {
 	let d = new Date();
 	const dParsed  = d.getFullYear() + "-" +
 		((d.getMonth()+1) < 10 ? "0" + (d.getMonth()+1) : (d.getMonth()+1))
-		+ "-" + d.getDate();
+        + "-" 
+		+ ((d.getDate()+1) < 10 ? "0" + (d.getDate()) : (d.getDate()));
 
 
 	$youCalDisplay.text = youCal;
