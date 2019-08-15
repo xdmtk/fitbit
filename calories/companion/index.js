@@ -1,4 +1,5 @@
 import { createRequest } from "./endpoint";
+import { getApiKey } from "./endpoint";
 import { me } from "companion";
 import { localStorage } from "local-storage";
 import * as messaging from "messaging";
