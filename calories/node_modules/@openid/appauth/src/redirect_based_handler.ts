@@ -12,15 +12,15 @@
  * limitations under the License.
  */
 
-import {AuthorizationRequest, AuthorizationRequestJson} from './authorization_request';
-import {AuthorizationRequestHandler, AuthorizationRequestResponse, BUILT_IN_PARAMETERS} from './authorization_request_handler';
-import {AuthorizationError, AuthorizationResponse, AuthorizationResponseJson} from './authorization_response'
-import {AuthorizationServiceConfiguration, AuthorizationServiceConfigurationJson} from './authorization_service_configuration';
-import {cryptoGenerateRandom, RandomGenerator} from './crypto_utils';
+import {AuthorizationRequest} from './authorization_request';
+import {AuthorizationRequestHandler, AuthorizationRequestResponse} from './authorization_request_handler';
+import {AuthorizationError, AuthorizationResponse} from './authorization_response'
+import {AuthorizationServiceConfiguration} from './authorization_service_configuration';
+import {Crypto, DefaultCrypto} from './crypto_utils';
 import {log} from './logger';
-import {BasicQueryStringUtils, QueryStringUtils} from './query_string_utils';
+import {BasicQueryStringUtils} from './query_string_utils';
 import {LocalStorageBackend, StorageBackend} from './storage';
-import {LocationLike, StringMap} from './types';
+import {LocationLike} from './types';
 
 
 /** key for authorization request. */
@@ -50,19 +50,22 @@ export class RedirectRequestHandler extends AuthorizationRequestHandler {
       public storageBackend: StorageBackend = new LocalStorageBackend(),
       utils = new BasicQueryStringUtils(),
       public locationLike: LocationLike = window.location,
-      generateRandom = cryptoGenerateRandom) {
-    super(utils, generateRandom);
+      crypto: Crypto = new DefaultCrypto()) {
+    super(utils, crypto);
   }
 
   performAuthorizationRequest(
       configuration: AuthorizationServiceConfiguration,
       request: AuthorizationRequest) {
-    let handle = this.generateRandom();
+    const handle = this.crypto.generateRandom(10);
+
     // before you make request, persist all request related data in local storage.
-    let persisted = Promise.all([
+    const persisted = Promise.all([
       this.storageBackend.setItem(AUTHORIZATION_REQUEST_HANDLE_KEY, handle),
-      this.storageBackend.setItem(
-          authorizationRequestKey(handle), JSON.stringify(request.toJson())),
+      // Calling toJson() adds in the code & challenge when possible
+      request.toJson().then(
+          result =>
+              this.storageBackend.setItem(authorizationRequestKey(handle), JSON.stringify(result))),
       this.storageBackend.setItem(
           authorizationServiceConfigurationKey(handle), JSON.stringify(configuration.toJson())),
     ]);
@@ -90,7 +93,7 @@ export class RedirectRequestHandler extends AuthorizationRequestHandler {
             // requires a corresponding instance of result
             // TODO(rahulrav@): check for inconsitent state here
             .then(result => JSON.parse(result!))
-            .then(json => AuthorizationRequest.fromJson(json))
+            .then(json => new AuthorizationRequest(json))
             .then(request => {
               // check redirect_uri and state
               let currentUri = `${this.locationLike.origin}${this.locationLike.pathname}`;
@@ -107,10 +110,14 @@ export class RedirectRequestHandler extends AuthorizationRequestHandler {
                   // get additional optional info.
                   let errorUri = queryParams['error_uri'];
                   let errorDescription = queryParams['error_description'];
-                  authorizationError =
-                      new AuthorizationError(error, errorDescription, errorUri, state);
+                  authorizationError = new AuthorizationError({
+                    error: error,
+                    error_description: errorDescription,
+                    error_uri: errorUri,
+                    state: state
+                  });
                 } else {
-                  authorizationResponse = new AuthorizationResponse(code, state!);
+                  authorizationResponse = new AuthorizationResponse({code: code, state: state});
                 }
                 // cleanup state
                 return Promise

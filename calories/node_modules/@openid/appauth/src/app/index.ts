@@ -15,15 +15,15 @@
 // Represents the test web app that uses the AppAuthJS library.
 
 import {AuthorizationRequest} from '../authorization_request';
-import {AuthorizationListener, AuthorizationNotifier, AuthorizationRequestHandler} from '../authorization_request_handler';
-import {AuthorizationResponse} from '../authorization_response';
+import {AuthorizationNotifier, AuthorizationRequestHandler} from '../authorization_request_handler';
 import {AuthorizationServiceConfiguration} from '../authorization_service_configuration';
 import {log} from '../logger';
 import {RedirectRequestHandler} from '../redirect_based_handler';
 import {GRANT_TYPE_AUTHORIZATION_CODE, GRANT_TYPE_REFRESH_TOKEN, TokenRequest} from '../token_request';
 import {BaseTokenRequestHandler, TokenRequestHandler} from '../token_request_handler';
-import {TokenError, TokenResponse} from '../token_response';
-
+import {TokenResponse} from '../token_response';
+import { AuthorizationResponse } from '../authorization_response';
+import { StringMap } from '../types';
 
 /* Some interface declarations for Material design lite. */
 
@@ -38,7 +38,9 @@ declare interface SnackBarOptions {
 /**
  * Interface that defines the MDL Material Snack Bar API.
  */
-declare interface MaterialSnackBar { showSnackbar: (options: SnackBarOptions) => void; }
+declare interface MaterialSnackBar {
+  showSnackbar: (options: SnackBarOptions) => void;
+}
 
 /* an example open id connect provider */
 const openIdConnectUrl = 'https://accounts.google.com';
@@ -58,6 +60,8 @@ export class App {
 
   // state
   private configuration: AuthorizationServiceConfiguration|undefined;
+  private request: AuthorizationRequest|undefined;
+  private response: AuthorizationResponse|undefined;
   private code: string|undefined;
   private tokenResponse: TokenResponse|undefined;
 
@@ -71,6 +75,8 @@ export class App {
     this.notifier.setAuthorizationListener((request, response, error) => {
       log('Authorization request complete ', request, response, error);
       if (response) {
+        this.request = request;
+        this.response = response;
         this.code = response.code;
         this.showMessage(`Authorization Code ${response.code}`);
       }
@@ -97,13 +103,14 @@ export class App {
 
   makeAuthorizationRequest() {
     // create a request
-    let request = new AuthorizationRequest(
-        clientId,
-        redirectUri,
-        scope,
-        AuthorizationRequest.RESPONSE_TYPE_CODE,
-        undefined, /* state */
-        {'prompt': 'consent', 'access_type': 'offline'});
+    let request = new AuthorizationRequest({
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      scope: scope,
+      response_type: AuthorizationRequest.RESPONSE_TYPE_CODE,
+      state: undefined,
+      extras: {'prompt': 'consent', 'access_type': 'offline'}
+    });
 
     if (this.configuration) {
       this.authorizationHandler.performAuthorizationRequest(this.configuration, request);
@@ -121,14 +128,30 @@ export class App {
 
     let request: TokenRequest|null = null;
     if (this.code) {
+      let extras: StringMap|undefined = undefined;
+      if (this.request && this.request.internal) {
+        extras = {};
+        extras['code_verifier'] = this.request.internal['code_verifier'];
+      }
       // use the code to make the token request.
-      request = new TokenRequest(
-          clientId, redirectUri, GRANT_TYPE_AUTHORIZATION_CODE, this.code, undefined);
+      request = new TokenRequest({
+        client_id: clientId,
+        redirect_uri: redirectUri,
+        grant_type: GRANT_TYPE_AUTHORIZATION_CODE,
+        code: this.code,
+        refresh_token: undefined,
+        extras: extras
+      });
     } else if (this.tokenResponse) {
       // use the token response to make a request for an access token
-      request = new TokenRequest(
-          clientId, redirectUri, GRANT_TYPE_REFRESH_TOKEN, undefined,
-          this.tokenResponse.refreshToken);
+      request = new TokenRequest({
+        client_id: clientId,
+        redirect_uri: redirectUri,
+        grant_type: GRANT_TYPE_REFRESH_TOKEN,
+        code: undefined,
+        refresh_token: this.tokenResponse.refreshToken,
+        extras: undefined
+      });
     }
 
     if (request) {
@@ -154,7 +177,6 @@ export class App {
             } else {
               this.showMessage(`Obtained an access token ${response.accessToken}.`);
             }
-
           })
           .catch(error => {
             log('Something bad happened', error);

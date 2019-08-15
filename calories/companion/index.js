@@ -38,13 +38,17 @@ function setupMessaging() {
 }
 
 function uploadData() {
-    let user = 'nick';
+    let uid = 0;
 	let cals = localStorage.getItem("calories");
 	let burned = localStorage.getItem("burned");
 	let weight = localStorage.getItem("weight");
-	let endpoint = createRequest(user,cals,burned,weight);
+	let endpoint = createRequest(uid,cals,burned,weight);
 	console.log("fetching endpoint: " + endpoint);
-	fetch(endpoint)
+	fetch(endpoint, {
+		headers: {
+			'API_KEY' : `${getApiKey()}`
+		}
+	})
 	.then(function(response) {
         response.json().then(function (t) {
             console.log("You calories: " + t[0][0]['calories']);

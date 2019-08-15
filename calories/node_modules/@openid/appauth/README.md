@@ -5,7 +5,7 @@ for communicating with [OAuth 2.0](https://tools.ietf.org/html/rfc6749)
 and [OpenID Connect](http://openid.net/specs/openid-connect-core-1_0.html) providers
 following the best practice
 [RFC 8252 - OAuth 2.0 for Native Apps](https://tools.ietf.org/html/rfc8252).
-The library is designed for use in `Node.js` CLI applications,
+The library is designed for use in `Web Apps`, `Node.js` CLI applications,
 `Chrome Apps` and applications that use `Electron` or similar frameworks.
 
 It strives to directly map the requests and responses of those specifications,
@@ -60,13 +60,14 @@ this.notifier.setAuthorizationListener((request, response, error) => {
 });
 
 // create a request
-let request = new AuthorizationRequest(
-    clientId,
-    redirectUri,
-    scope,
-    AuthorizationRequest.RESPONSE_TYPE_CODE,
-    undefined, /* state */
-    {'prompt': 'consent', 'access_type': 'offline'});
+let request = new AuthorizationRequest({
+    client_id: clientId,
+    redirect_uri: redirectUri,
+    scope: scope,
+    response_type: AuthorizationRequest.RESPONSE_TYPE_CODE,
+    state: undefined,
+    extras: {'prompt': 'consent', 'access_type': 'offline'}
+  });
 
 // make the authorization request
 this.authorizationHandler.performAuthorizationRequest(this.configuration, request);
@@ -80,15 +81,30 @@ this.tokenHandler = new BaseTokenRequestHandler();
 let request: TokenRequest|null = null;
 
 if (this.code) {
+  let extras: StringMap|undefined = undefined;
+  if (this.request && this.request.internal) {
+    extras = {};
+    extras['code_verifier'] = this.request.internal['code_verifier'];
+  }
   // use the code to make the token request.
-  request = new TokenRequest(
-      clientId, redirectUri, GRANT_TYPE_AUTHORIZATION_CODE, this.code, undefined,
-      {'client_secret': clientSecret});
+  request = new TokenRequest({
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      grant_type: GRANT_TYPE_AUTHORIZATION_CODE,
+      code: this.code,
+      refresh_token: undefined,
+      extras: extras
+    });
 } else if (this.tokenResponse) {
   // use the token response to make a request for an access token
-  request = new TokenRequest(
-      clientId, redirectUri, GRANT_TYPE_REFRESH_TOKEN, undefined,
-      this.tokenResponse.refreshToken, {'client_secret': clientSecret});
+  request = new TokenRequest({
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      grant_type: GRANT_TYPE_REFRESH_TOKEN,
+      code: undefined,
+      refresh_token: this.tokenResponse.refreshToken,
+      extras: undefined
+    });
 }
 
 this.tokenHandler.performTokenRequest(this.configuration, request)

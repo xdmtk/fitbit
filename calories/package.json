@@ -4,8 +4,8 @@
   "private": true,
   "license": "UNLICENSED",
   "devDependencies": {
-    "@fitbit/sdk": "~3.0.0",
-    "@fitbit/sdk-cli": "^1.5.0"
+    "@fitbit/sdk": "~3.1.0",
+    "@fitbit/sdk-cli": "^1.6.0"
   },
   "fitbit": {
     "appUUID": "be17e029-0498-4847-b89b-4b6293eb0837",
@@ -14,10 +14,10 @@
     "iconFile": "resources/fire-icon.png",
     "wipeColor": "#ffffff",
     "requestedPermissions": [
-		"access_internet",
-		"access_activity",
-		"run_background"
-	],
+      "access_internet",
+      "access_activity",
+      "run_background"
+    ],
     "buildTargets": [
       "higgs",
       "meson"
