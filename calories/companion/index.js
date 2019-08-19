@@ -34,7 +34,8 @@ function setupMessaging() {
 				userArr[1] +  " : " + userArr[2] + 
 				" : " + userArr[0] + "\nsetting local storage");
 
-			uploadData();
+			// Not available in Front-end version
+//			uploadData();
 	}
 }
 
