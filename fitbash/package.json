@@ -1,0 +1,38 @@
+{
+  "name": "Fitbash",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@fitbit/sdk": "~3.0.0",
+    "@fitbit/sdk-cli": "^1.5.0"
+  },
+  "fitbit": {
+    "appUUID": "eef475e7-17ce-4c30-bcfa-5f3a570033aa",
+    "appType": "clockface",
+    "appDisplayName": "Fitbash",
+    "iconFile": "resources/icon.png",
+    "wipeColor": "#ffffff",
+    "requestedPermissions": [
+      "access_activity",
+      "access_heart_rate",
+      "access_internet",
+      "access_location"
+    ],
+    "buildTargets": [
+      "higgs",
+      "meson"
+    ],
+    "i18n": {},
+    "defaultLanguage": "en-US"
+  },
+  "scripts": {
+    "build": "fitbit-build",
+    "debug": "fitbit"
+  },
+  "dependencies": {
+    "fitbit": "0.0.7",
+    "fitbit-sdk": "0.0.1",
+    "fitbit-weather": "^0.2.0"
+  }
+}

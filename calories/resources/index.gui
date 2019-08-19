@@ -1,0 +1,57 @@
+<svg>
+    <use id="container" href="#panoramaview">
+        <use id="item1" href="#panoramaview-item">
+            
+            <use id="val100" class="pbtn" href="#square-button" y="55%" width="33%" fill="fb-red">
+                <set id="a" href="#text" attributeName="text-buffer" to="100"/>
+            </use>
+
+            <use id="val50" class="pbtn" href="#square-button" y="55%" x="$" width="33%" fill="fb-red">
+                <set id="b" href="#text" attributeName="text-buffer" to="50"/>
+            </use>
+
+            <use id="val10" class="pbtn" href="#square-button" y="55%" x="$" width="33%" fill="fb-red">
+                <set id="c" href="#text" attributeName="text-buffer" to="10"/>
+            </use>
+
+            <use id="calorieDisplay" class="no-pbtn" href="#square-button" y="40" width="99%" height="34%" fill="fb-yellow">
+                <set id="e" href="#text" attributeName="text-buffer" to="0"/>
+                <set id="f" href="#text" attributeName="text-length" to="10" />
+            </use>
+
+            <text x="37%" y="95%" font-size="24" fill="white">Calories</text>
+
+        
+        </use>
+            
+
+        <use id="item2" href="#panoramaview-item">
+            <use id="val1" class="pbtn-weight" href="#square-button" y="55%" width="33%" fill="fb-green">
+                <set id="a" href="#text" attributeName="text-buffer" to="1.0"/>
+            </use>
+
+            <use id="valp5" class="pbtn-weight" href="#square-button" y="55%" x="$" width="33%" fill="fb-green">
+                <set id="b" href="#text" attributeName="text-buffer" to=".5"/>
+            </use>
+
+            <use id="valp1" class="pbtn-weight" href="#square-button" y="55%" x="$" width="33%" fill="fb-green">
+                <set id="c" href="#text" attributeName="text-buffer" to=".1"/>
+            </use>
+
+            <use id="weightDisplay" class="no-pbtn" href="#square-button" y="40" width="99%" height="34%" fill="fb-blue">
+                <set id="e" href="#text" attributeName="text-buffer" to="0"/>
+                <set id="f" href="#text" attributeName="text-length" to="10" />
+            </use>
+
+            <text x="37%" y="95%" font-size="24" fill="white">Weight</text>
+        </use>
+        
+
+            
+
+        <use id="pagination-dots" href="#pagination-widget" y="8">
+            <use id="pgdot1" href="#pagination-highlight-dot" />
+            <use id="pgdot2" href="#pagination-dot" />
+        </use>
+    </use>
+</svg>
