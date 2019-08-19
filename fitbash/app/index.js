@@ -478,7 +478,6 @@ function pulsate() {
 			f = !f;
 		}
 		frameString = "pulse/p-" + frameNumber + ".png";
-		bgImage.image = frameString;
 	}
 	else {
 		clearInterval(pulser);
