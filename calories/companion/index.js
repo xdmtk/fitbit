@@ -1,5 +1,3 @@
-import { createRequest } from "./endpoint";
-import { getApiKey } from "./endpoint";
 import { me } from "companion";
 import { localStorage } from "local-storage";
 import * as messaging from "messaging";
@@ -34,10 +32,11 @@ function setupMessaging() {
 				userArr[1] +  " : " + userArr[2] + 
 				" : " + userArr[0] + "\nsetting local storage");
 
-			uploadData();
+			// Not available in Front-end version
+//			uploadData();
 	}
 }
-
+/*
 function uploadData() {
     let uid = 0;
 	let cals = localStorage.getItem("calories");
@@ -70,6 +69,6 @@ function uploadData() {
 
 
 }
-
+*/
 
 main();

@@ -5,7 +5,6 @@ import clock from "clock";
 import * as messaging from "messaging";
 import { today } from "user-activity";
 import { vibration } from "haptics";
-import { user } from "user-profile";
 
 
 
@@ -16,10 +15,6 @@ const $pushButtons = document.getElementsByClassName('pbtn');
 const $pushButtonsWeight = document.getElementsByClassName('pbtn-weight');
 const $nonPushButtons = document.getElementsByClassName('no-pbtn');
 const $plusMinusCalDisplay = document.getElementById('calorieDisplay');
-const $youCalDisplay = document.getElementById('yourCalDisplay');
-const $otherCalDisplay = document.getElementById('otherCalDisplay');
-const $youBurnedDisplay = document.getElementById('yourBurnedDisplay');
-const $otherBurnedDisplay = document.getElementById('otherBurnedDisplay');
 /* Calorie/Weight data */
 let totalCals;
 let totalWeight = 0;
@@ -36,33 +31,6 @@ let plusMinWeight = '+';
  * @param evt { event } - Contains response data with cal info
  */
 const receiveCallback = function receiveMessage(evt) {
-    
-    console.log("received" + evt.data);
-   	const entryData = evt.data.split(",");
-   	const youCal = entryData[0];
-	const otherCal = entryData[1];
-	const otherDate = entryData[2].split(' ')[0];
-	const youBurned = entryData[3];
-	const otherBurned = entryData[4];
-	let d = new Date();
-	const dParsed  = d.getFullYear() + "-" +
-		((d.getMonth()+1) < 10 ? "0" + (d.getMonth()+1) : (d.getMonth()+1))
-        + "-" 
-		+ ((d.getDate()+1) < 10 ? "0" + (d.getDate()) : (d.getDate()));
-
-
-	$youCalDisplay.text = youCal;
-	$otherCalDisplay.text = otherCal;
-	$youBurnedDisplay.text = youBurned;
-	$otherBurnedDisplay.text = otherBurned;
-
-	if (Date.parse(otherDate) !== Date.parse(dParsed)) {
-		console.log(Date.parse(otherDate));
-		console.log(Date.parse(dParsed));
-		console.log(otherDate);
-		console.log(dParsed);
-		$otherCalDisplay.text = "0";
-	}
 
 };
 
@@ -169,7 +137,6 @@ function loadCaloricData() {
 
     /* If fields are valid, write data to global totalCals */
 	if (dataFields.length > 1) {
-		console.log("Read data: " + data);
 		totalCals = parseInt(dataFields[0]);
 
         /* If invalid totalCal field, set to 0 */
@@ -216,7 +183,6 @@ function loadWeightData() {
 	let dataFields = data.split(",");
 
 	if (dataFields.length > 1) {
-		console.log("Read data: " + data);
 		totalWeight = parseFloat(dataFields[0]);
         if (isNaN(totalWeight)) {
             totalWeight = 190;
@@ -235,7 +201,6 @@ function loadWeightData() {
 
 /* Add/Subtract Weight */
 function addSubtractWeight(amount) {
-    console.log(`In substract calls with amount ${amount} with totalweight ${totalWeight}`);
     amount = parseFloat(amount);
 
     if (plusMinWeight === '+') {
@@ -255,7 +220,6 @@ function addSubtractWeight(amount) {
 
 /* Add/Subtract Calories */
 function addSubtractCals(amount) {
-    console.log(`In substract calls with amount ${amount}`);
     amount = parseInt(amount);
 
     if (plusMin === '+') {
@@ -316,7 +280,6 @@ function addSubtractMod(action) {
 
 function setupMessaging() {
 	messaging.peerSocket.onopen = function() {
-		console.log("Companion connection established, ready to send msg");
 		sendMessage(totalCals,totalWeight)
 	}
 	messaging.peerSocket.onerror = function(err) {
@@ -327,11 +290,9 @@ function setupMessaging() {
 
 function sendMessage(data, weight) {
 	if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
-		console.log("sending data: " + data);
 		messaging.peerSocket.send('nick' + ',' + data + ',' + today.local.calories + ',' + weight);
 	}
 	else {
-		console.log("Connection is closed, cant send data");
 	}
 }
 

@@ -46,42 +46,12 @@
             <text x="37%" y="95%" font-size="24" fill="white">Weight</text>
         </use>
         
-        
-        <use id="item3" href="#panoramaview-item">
-
-            <text x="63" y="30" font-size="24" fill="white">Nick</text>
-            <use id="yourCalDisplay" class="no-pbtn" href="#square-button" x="10" y="40" width="150" height="34%" fill="fb-orange">
-                <set id="h" href="#text" attributeName="text-buffer" to="0"/>
-                <set id="i" href="#text" attributeName="text-length" to="10" />
-            </use>
-
-            <text x="230" y="150" font-size="24" fill="white">Burned</text>
-            <use id="yourBurnedDisplay" class="no-pbtn" href="#square-button" x="10" y="160" width="150" height="34%" fill="fb-orange">
-                <set id="t" href="#text" attributeName="text-buffer" to="0"/>
-                <set id="s" href="#text" attributeName="text-length" to="10" />
-            </use>
-
-            <text x="237" y="30" font-size="24" fill="white">Xenia</text>
-            <use id="otherCalDisplay" class="no-pbtn" href="#square-button" x="195" y="40" width="150"  height="34%" fill="fb-yellow">
-                <set id="j" href="#text" attributeName="text-buffer" to="0"/>
-                <set id="k" href="#text" attributeName="text-length" to="10" />
-            </use>
-
-            <text x="50" y="150" font-size="24" fill="white">Burned</text>
-            <use id="otherBurnedDisplay" class="no-pbtn" href="#square-button" x="195" y="160" width="150"  height="34%" fill="fb-yellow">
-                <set id="p" href="#text" attributeName="text-buffer" to="0"/>
-                <set id="o" href="#text" attributeName="text-length" to="10" />
-            </use>
 
             
-
-            <rect x="51%" y="15%" width="2" height="200" fill="#ffffff" />
-        </use>
 
         <use id="pagination-dots" href="#pagination-widget" y="8">
             <use id="pgdot1" href="#pagination-highlight-dot" />
             <use id="pgdot2" href="#pagination-dot" />
-            <use id="pgdot3" href="#pagination-dot" />
         </use>
     </use>
 </svg>
