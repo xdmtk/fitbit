@@ -1,7 +1,7 @@
 // Import the messaging module
 import * as messaging from "messaging";
 import { geolocation } from "geolocation";
-import API_KEY from "api.key";
+const API_KEY = "2e5f8a30167b5b71a8792cc9e09f94bc";
 
 var latitude;
 var longitude;

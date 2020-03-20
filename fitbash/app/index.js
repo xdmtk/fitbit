@@ -3,6 +3,7 @@ import document from "document";
 import { display } from "display";
 import clock from "clock";
 import { battery } from "power";
+import { vibration } from "haptics";
 import { today } from "user-activity";
 import { memory } from "system";
 import { display } from "display";
@@ -119,6 +120,7 @@ function main() {
 function setupEventHandlers() {
 	doc.onmousedown = function () {
 		console.log("mouse press");
+        vibration.start("bump");
 		clearTerminal("now");
 		clearInterval(writer);
 		writer = null;
@@ -126,6 +128,7 @@ function setupEventHandlers() {
 			if (writer === null) {
 				write(msgList[msgenum]());
 			}
+            vibration.stop("bump");
 		}, 5);
 	}
 	setTimeout(function() {
@@ -136,10 +139,14 @@ function setupEventHandlers() {
 		if (!display.on) {
 			sensorControl("stop");
 			console.log("stopping sensors");
+            msgenum = -1;
 		}
 		else {
 			sensorControl("start");
 			console.log("starting sensors");
+            clearTerminal("now");
+            clearInterval(writer);
+            write(msgList[msgenum]());
 		}
 	});
 			
@@ -330,7 +337,8 @@ function write(text) {
 		let id = document.getElementById("line" + x);
 
 		// Clear the line from existing text when c is 0
-		if (!c) {
+		if (!c && id !== null) {
+
 			id.text = "";
 		}
 		if (c < lineLimit && !abortWrite) {
@@ -342,7 +350,9 @@ function write(text) {
 				x += 1;
 			}
 			else {
-				id.text += chars[f];
+                if (id !== null) {
+                    id.text += chars[f];
+                }
 				c += 1;
 				f += 1;
 			}
@@ -379,7 +389,7 @@ function write(text) {
 			clearInterval(writer);
 		//	clearTerminal();
 		}
-	}, 5);
+	}, 1);
 }
 
 
@@ -388,7 +398,9 @@ function clearTerminal(timing="none") {
 	if (timing === "now") {
 		for (let x = 1; x < 6; ++x) {
 			let id = document.getElementById("line" + x);
-			id.text = "";
+            if (id !== null) {
+                id.text = "";
+            }
 		}
 		writing = false;
 	}
@@ -396,7 +408,9 @@ function clearTerminal(timing="none") {
 		setTimeout(function () {
 			for (let x = 1; x < 6; ++x) {
 				let id = document.getElementById("line" + x);
-				id.text = "";
+                if (id !== null) {
+                    id.text = "";
+                }
 			}
 			writing = false;
 		}, 1250);
